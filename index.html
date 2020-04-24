@@ -14,44 +14,53 @@
   <link rel="stylesheet" href="css/normalize.css">
   <link rel="stylesheet" href="css/main.css">
 
-  <link href="https://fonts.googleapis.com/css?family=Open+Sans|Source+Sans+Pro&display=swap" rel="stylesheet">
 
+  <link rel="stylesheet" href="https://unpkg.com/pageable@latest/dist/pageable.min.css">
 
-  <meta name="theme-color" content="#fafafa">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+
+  <link href="https://fonts.googleapis.com/css?family=Manrope|Noto+Sans&display=swap" rel="stylesheet">
+
 </head>
 
 <body>
 
-  <section class="hero">
-    <div class="hero-inner">
-        <h1>Hockey and Advanced Statistics</h1>
-        <h2>Measuring the indications of a good team</h2>
-    </div>
-  </section>
 
 
-  <div class="page-wrapper">
 
+  <div id="container">
+    <div data-anchor="Page 1">
 
-    <div class="row section max-width">
-      <h1>What are advanced statistics?</h1>
+      <h1>Advanced statistics in ice-hockey</h1>
+      <h2>Using numbers to determine how good a team is in different aspects of the game</h2>
 
     </div>
+    <div data-anchor="Page 2">
+      <h1>The flaws of basic statistics</h1>
+
+      <div class="row">
+
+        <div class="column center">
+          <img src="img/basic-flaws.svg" width=100% >
+
+        </div>
+
+      </div>
 
 
-
-    <div class="row section max-width">
-      <h1>What are advanced statistics?</h1>
 
     </div>
+    <div data-anchor="Page 3">
+      <h1>Advanced statistics and why they are better</h1>
 
+      <p>Infographic here</p>
+    </div>
+    <div data-anchor="Page 4">
+      <h1>Evidence</h1>
+      <h2>How can we actually tell that </h2>
 
-  </div>
-
-
-
-
-
+    </div>
+</div>
 
 
 
@@ -67,9 +76,10 @@
   <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
   <script>window.jQuery || document.write('<script src="js/vendor/jquery-3.4.1.min.js"><\/script>')</script>
  
- 
+ <script type="text/javascript" src="https://unpkg.com/pageable@latest/dist/pageable.min.js"></script>
   <script src="js/plugins.js"></script>
   <script src="js/main.js"></script>
+
 
 </body>
 
