@@ -40,3 +40,52 @@ var pageable = new Pageable("#container", {
       // do something when scrolling ends
   },
 });
+
+let chart;
+let currentData;
+
+const get1819RegData = async () => d3.csv("/./data/nhl/nhl-18-19-reg.csv");
+const get1819PlayoffsData = async () => d3.csv("/./data/nhl/nhl-18-19-playoffs.csv");
+
+const get1718RegData = async () => d3.csv("/./data/nhl/nhl-17-18-reg.csv");
+const get1718PlayoffsData = async () => d3.csv("/./data/nhl/nhl-17-18-playoffs.csv");
+
+const get1617RegData = async () => d3.csv("/./data/nhl/nhl-16-17-reg.csv");
+const get1617PlayoffsData = async () => d3.csv("/./data/nhl/nhl-16-17-playoffs.csv");
+
+const get1516RegData = async () => d3.csv("/./data/nhl/nhl-15-16-reg.csv");
+const get1516PlayoffsData = async () => d3.csv("/./data/nhl/nhl-15-16-playoffs.csv");
+
+
+const drawChart = data => {
+
+    const chartData = {
+        
+    }
+}
+
+const updateData = newData => {
+
+}
+
+const parseData = () => {
+
+}
+
+const init = async () => {
+
+    const dataFile = await get1819RegData();
+
+    console.log(dataFile);
+    currentData = dataFile;
+
+    drawChart(data);
+   /* const foodData = await getFoodData();
+    originalData = foodData;
+    drawFoodChart(foodData);*/
+
+
+  };
+
+
+  window.onload = init;
