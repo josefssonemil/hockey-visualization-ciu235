@@ -48,12 +48,14 @@ var pageable = new Pageable("#container", {
 
 import * as corsiChart from "./corsi.js";
 import * as pdoChart from "./pdo.js";
+import * as xgChart from "./xg-hdcf.js";
 
 //import * as diabetesGeneralChart from "./diabetesGeneral.js";
 
 const init = async () => {
   corsiChart.init();
   pdoChart.init();
+  xgChart.init();
 };
 
 window.onload = init;
