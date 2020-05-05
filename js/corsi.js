@@ -217,8 +217,22 @@ const drawCorsiChart = originalData => {
 
 
 
+/* Returns data needed for table next to graph (Team, CF%, Points)*/ 
+function getTableData(){
+    var returnVal = [];
 
+    for (var i = 0; i < dataFile.length; i++){
+        var elem = {
+            Team: dataFile[i][TEAM_KEY],
+            CFPercent: dataFile[i][CF_PERCENT_KEY],
+            Points: dataFile[i][PPG_KEY]
+        }
 
+        returnVal.push(elem);
+    }
+
+    return returnVal;
+}
 
 
 

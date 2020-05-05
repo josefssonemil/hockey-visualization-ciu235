@@ -1,3 +1,8 @@
+import * as corsiChart from "./corsi.js";
+import * as pdoChart from "./pdo.js";
+import * as xgChart from "./xg-hdcf.js";
+
+
 var pageable = new Pageable("#container", {
   childSelector: "[data-anchor]", // CSS3 selector string for the pages
   anchors: [], // define the page anchors
@@ -42,13 +47,24 @@ var pageable = new Pageable("#container", {
 });
 
 
+function createCorsiTable(){
+    var data = corsiChart.getTableData();
+    var clusterize = new Clusterize({
+      rows: data,
+      scrollId: 'scrollArea-1',
+      contentId: 'contentArea-1'
+    });
+}
+
+function createPDOTable(){
+
+}
+
+function createXGtable(){
+
+}
 
 
-
-
-import * as corsiChart from "./corsi.js";
-import * as pdoChart from "./pdo.js";
-import * as xgChart from "./xg-hdcf.js";
 
 //import * as diabetesGeneralChart from "./diabetesGeneral.js";
 
@@ -56,6 +72,9 @@ const init = async () => {
   corsiChart.init();
   pdoChart.init();
   xgChart.init();
+
+  /* Create tables*/  
+
 };
 
 window.onload = init;
