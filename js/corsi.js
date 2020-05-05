@@ -27,10 +27,14 @@ var chartColors = {
 	red: 'rgb(255, 99, 132)',
 	orange: 'rgb(255, 159, 64)',
 	yellow: 'rgb(255, 205, 86)',
-	green: 'rgb(75, 192, 192)',
+	green: 'rgb(86, 197, 151)',
 	blue: 'rgb(54, 162, 235)',
 	purple: 'rgb(153, 102, 255)',
-	grey: 'rgb(231,233,237)'
+    grey: 'rgb(231,233,237)',
+    white: 'rgb(255,255,255)'
+
+
+
 };
 
 var color = Chart.helpers.color;
@@ -74,17 +78,24 @@ const drawCorsiChart = originalData => {
     }
 
 
+
     console.log(scatterData);
 
     const chartData = {
         datasets: [{
-            label: 'CF60 and CA60 for NHL teams (2019-2020)',
+            label: 'Team',
             data: scatterData,
-            backgroundColor: DOT_COLOR,
-            borderColor: DOT_COLOR,
+            backgroundColor: chartColors.green,
+            borderColor: 'black',
+            pointRadius: 10,
+            pointHitRadius: 10,
+            pointHoverRadius: 15,
+            pointHoverBackgroundColor: chartColors.orange 
            
         }]
     }
+
+    
 
     const options = {
         //pointRadius: 200,
@@ -93,7 +104,7 @@ const drawCorsiChart = originalData => {
                 label: function(tooltipItem, data) {
                     var label = data.datasets[tooltipItem.datasetIndex].label || '';
                     var i = tooltipItem.index;
-                    label = slicedData[i][TEAM_KEY] + ": " + "CF60: " + slicedData[i][CF_KEY] / (originalData[i][TOI_KEY] / 60) + "CA60: " + slicedData[i][CA_KEY] / (originalData[i][TOI_KEY] / 60);
+                    label = slicedData[i][TEAM_KEY] + ": " + "CF60: " + (slicedData[i][CF_KEY] / (originalData[i][TOI_KEY] / 60)).toFixed(2) + "\n CA60: " + (slicedData[i][CA_KEY] / (originalData[i][TOI_KEY] / 60)).toFixed(2);
                  
                     return label;
                 }
@@ -106,25 +117,21 @@ const drawCorsiChart = originalData => {
              },
         title: {
             display: true,
-            text:
-              "Hej",
-              fontColor: "white"
+            text: "Corsi For per 60 (CF60) and Corsi Against per 60 (CA60) for all NHL teams",
+            fontColor: "white"
 
           },
-        scales:{
+        scales: {
             yAxes: [{
                 display: true,
                 labelString: "CA60",
-                fontColor: "white",
+                fontColor: chartColors.white,
 
                 ticks: {
-                  fontColor: 'white',
+                  fontColor: chartColors.white,
                   reverse: true
-              },
-              pointLabels: {
-                fontColor: 'white' // labels around the edge like 'Running'
-              },
-
+              }
+            
             },
             
 
@@ -134,15 +141,17 @@ const drawCorsiChart = originalData => {
                 {
                     display: true,
                     labelString: "CF60",
-                    fontColor: "white",
+                    fontColor: chartColors.white,
                     ticks: {
-                      fontColor: 'white'
+                      fontColor: chartColors.white,
                   },
                 }
             ],
 
             gridLines: {
-                color: 'rgba(255, 255, 255, 0.2)'
+                color: chartColors.white,
+                display: true
+
             }
         }
     }

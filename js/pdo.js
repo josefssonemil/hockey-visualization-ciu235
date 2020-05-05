@@ -79,10 +79,14 @@ const drawPDOChart = originalData => {
 
     const chartData = {
         datasets: [{
-            label: 'PDO',
+            label: 'Shot percentage (SH%) and Save percentage (SV%) for NHL teams',
             data: scatterData,
-            backgroundColor: DOT_COLOR,
-            borderColor: DOT_COLOR,
+            backgroundColor: chartColors.green,
+            borderColor: 'black',
+            pointRadius: 10,
+            pointHitRadius: 10,
+            pointHoverRadius: 15,
+            pointHoverBackgroundColor: chartColors.orange 
            
         }]
     }

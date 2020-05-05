@@ -78,10 +78,14 @@ const drawXGChart = originalData => {
 
     const chartData = {
         datasets: [{
-            label: 'CF60 and CA60 for NHL teams (2019-2020)',
+            label: 'Expected goals (for and against) for NHL teams)',
             data: scatterData,
-            backgroundColor: DOT_COLOR,
-            borderColor: DOT_COLOR,
+            backgroundColor: chartColors.green,
+            borderColor: 'black',
+            pointRadius: 10,
+            pointHitRadius: 10,
+            pointHoverRadius: 15,
+            pointHoverBackgroundColor: chartColors.orange 
            
         }]
     }
