@@ -11,15 +11,13 @@
   <link rel="apple-touch-icon" href="icon.png">
   <!-- Place favicon.ico in the root directory -->
 
-  <link rel="stylesheet" href="css/normalize.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
   <link rel="stylesheet" href="css/main.css">
 
 
   <link rel="stylesheet" href="https://unpkg.com/pageable@latest/dist/pageable.min.css">
 
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/clusterize.js/0.18.0/clusterize.min.css">
 
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/multiple.js/0.0.1/multiple.min.css">
 
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
 
@@ -69,84 +67,60 @@
     <div data-anchor="Page 4">
       <h1>CORSI</h1>
       
-      <div class="row center max-width">
-        
-          <canvas id="corsiChart" height="175%;"> </canvas>
-            
-      </div>
-        <div class="row" style="margin-top:50px;">
-
-      
-            <div class="row center">
-              <div class="column-cards">
-                <div class="card">
-
-                  <div class="content">
-
-                    <div class="content-main-text">
-                        <span class="content-accent" id="top-cf"></span>
-                      </div>
-                      <div class="content-sub-text">
-                        <span>average CF%<br></span>
-                        <span>top 10 standings</span>
-                      </div>
-                  
-                  </div>
-              
-                </div>
-              </div>
-              <div class="column-cards">
-                <div class="card">
-
-                  <div class="content">
-
-                    <div class="content-main-text">
-                        <span class="content-accent" id="bot-cf"></span>
-                      </div>
-                      <div class="content-sub-text">
-                        <span>average CF%<br></span>
-                        <span>bottom 10 standings</span>
-                      </div>
-                  
-                  </div>
-                </div>
-              </div>
-              <div class="column-cards">
-                <div class="card">
-                  <div class="content">
-
-                    <div class="content-main-text">
-                        <span class="content-accent" id="top-p"></span>
-                      </div>
-                      <div class="content-sub-text">
-                        <span>average points<br></span>
-                        <span>top 10 corsi</span>
-                  
-                  </div>
-                </div>
-              </div>
-              <div class="column-cards">
-                <div class="card">
-                  <div class="content">
-
-                    <div class="content-main-text">
-                        <span class="content-accent" id ="bot-p"></span>
-                      </div>
-                      <div class="content-sub-text">
-                        <span>average points<br></span>
-                        <span>bottom 10 corsi</span>
-
-                      </div>
-                  
-                  </div>
-                </div>
-              </div>
+      <div class="container">
+        <div class="row">
+            <div class="col-sm-2"></div>
+            <div class="col-sm-8">
+              <canvas id="corsiChart" height="200%;"> </canvas>
             </div>
+            <div class="col-sm-2"></div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
 
 
-          </div>
 
+
+              <div class="card-deck">
+                <div class="card text-white bg-dark mb-3">
+                  <div class="card-body">
+                    <h5 class="card-title">Card title</h5>
+                    <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                  </div>
+                </div>
+                <div class="card text-white bg-dark mb-3">
+                  <div class="card-body">
+                    <h5 class="card-title">Card title</h5>
+                    <p class="card-text">This card has supporting text below as a natural lead-in to additional content.</p>
+                  </div>
+                </div>
+                <div class="card text-white bg-dark mb-3">
+                  <div class="card-body">
+                    <h5 class="card-title">Card title</h5>
+                    <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This card has even longer content than the first to show that equal height action.</p>
+                  </div>
+                </div>
+
+                <div class="card text-white bg-dark mb-3">
+                  <div class="card-body">
+                    <h5 class="card-title">Card title</h5>
+                    <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This card has even longer content than the first to show that equal height action.</p>
+                  </div>
+                </div>
+              </div>
+
+
+
+
+
+
+            </div>
+        </div>
     </div>
+        
+            
+    </div>
+      
 
     <div data-anchor="Page 5">
       <h1>PDO</h1>
@@ -193,10 +167,11 @@
  <script src="https://d3js.org/d3.v5.min.js"></script>
  <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
  <script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-annotation/0.5.7/chartjs-plugin-annotation.min.js"></script>
- <script src="https://cdnjs.cloudflare.com/ajax/libs/clusterize.js/0.18.0/clusterize.min.js"></script>
 
- <script src="https://cdnjs.cloudflare.com/ajax/libs/multiple.js/0.0.1/multiple.min.js"></script>
 
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
   <script src="js/plugins.js"></script>
   <script type="module" src="./js/main.js" defer></script>
 
