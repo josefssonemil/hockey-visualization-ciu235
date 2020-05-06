@@ -19,6 +19,8 @@
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/clusterize.js/0.18.0/clusterize.min.css">
 
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/multiple.js/0.0.1/multiple.min.css">
+
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
 
   <link href="https://fonts.googleapis.com/css?family=Manrope|Noto+Sans&display=swap" rel="stylesheet">
@@ -43,7 +45,7 @@
       <div class="row">
 
         <div class="column center">
-          <img src="img/basic-flaws.svg" width=100% >
+          <img src="img/basic-flaws.svg" width=100% > 
 
         </div>
 
@@ -67,35 +69,82 @@
     <div data-anchor="Page 4">
       <h1>CORSI</h1>
       
-      <div class="row">
-        <div class="column">
-          <canvas id="corsiChart" height="300px;"> </canvas>
-        </div>
+      <div class="row center max-width">
+        
+          <canvas id="corsiChart" height="175%;"> </canvas>
+            
+      </div>
+        <div class="row" style="margin-top:50px;">
 
-        <div class="column">
+      
+            <div class="row center">
+              <div class="column-cards">
+                <div class="card">
 
-        <div class="clusterize">
-          <table>
-            <thead>
-              <tr>
-                <th>Headers</th>
-              </tr>
-            </thead>
-          </table>
-          <div id="scrollArea-1" class="clusterize-scroll">
-            <table>
-              <tbody id="contentArea-1" class="clusterize-content">
-                <tr class="clusterize-no-data">
-                  <td>Loading data…</td>
-                </tr>
-              </tbody>
-            </table>
+                  <div class="content">
+
+                    <div class="content-main-text">
+                        <span class="content-accent" id="top-cf"></span>
+                      </div>
+                      <div class="content-sub-text">
+                        <span>average CF%<br></span>
+                        <span>top 10 standings</span>
+                      </div>
+                  
+                  </div>
+              
+                </div>
+              </div>
+              <div class="column-cards">
+                <div class="card">
+
+                  <div class="content">
+
+                    <div class="content-main-text">
+                        <span class="content-accent" id="bot-cf"></span>
+                      </div>
+                      <div class="content-sub-text">
+                        <span>average CF%<br></span>
+                        <span>bottom 10 standings</span>
+                      </div>
+                  
+                  </div>
+                </div>
+              </div>
+              <div class="column-cards">
+                <div class="card">
+                  <div class="content">
+
+                    <div class="content-main-text">
+                        <span class="content-accent" id="top-p"></span>
+                      </div>
+                      <div class="content-sub-text">
+                        <span>average points<br></span>
+                        <span>top 10 corsi</span>
+                  
+                  </div>
+                </div>
+              </div>
+              <div class="column-cards">
+                <div class="card">
+                  <div class="content">
+
+                    <div class="content-main-text">
+                        <span class="content-accent" id ="bot-p"></span>
+                      </div>
+                      <div class="content-sub-text">
+                        <span>average points<br></span>
+                        <span>bottom 10 corsi</span>
+
+                      </div>
+                  
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
           </div>
-        </div>
-
-      </div>
-
-      </div>
 
     </div>
 
@@ -145,6 +194,8 @@
  <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
  <script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-annotation/0.5.7/chartjs-plugin-annotation.min.js"></script>
  <script src="https://cdnjs.cloudflare.com/ajax/libs/clusterize.js/0.18.0/clusterize.min.js"></script>
+
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/multiple.js/0.0.1/multiple.min.js"></script>
 
   <script src="js/plugins.js"></script>
   <script type="module" src="./js/main.js" defer></script>

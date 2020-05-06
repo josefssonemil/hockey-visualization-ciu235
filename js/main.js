@@ -47,14 +47,8 @@ var pageable = new Pageable("#container", {
 });
 
 
-function createCorsiTable(){
-    var data = corsiChart.getTableData();
-    var clusterize = new Clusterize({
-      rows: data,
-      scrollId: 'scrollArea-1',
-      contentId: 'contentArea-1'
-    });
-}
+
+
 
 function createPDOTable(){
 
@@ -72,8 +66,6 @@ const init = async () => {
   corsiChart.init();
   pdoChart.init();
   xgChart.init();
-
-  /* Create tables*/  
 
 };
 

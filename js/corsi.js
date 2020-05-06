@@ -6,7 +6,7 @@ const CA_KEY = "CA";
 const CF_PERCENT_KEY = "CF%";
 const TEAM_KEY = "Team";
 const TOI_KEY = "TOI";
-const PPG_KEY = "Points %";
+const PPG_KEY = "Points";
 
 const DOT_COLOR = "rgb(249,131,20)";
 
@@ -63,7 +63,6 @@ const drawCorsiChart = originalData => {
     
     }
 
-    console.log(slicedData);
 
     var scatterData = [];
 
@@ -79,7 +78,6 @@ const drawCorsiChart = originalData => {
 
 
 
-    console.log(scatterData);
 
     const chartData = {
         datasets: [{
@@ -216,26 +214,69 @@ const drawCorsiChart = originalData => {
 
 
 
+const bindCardText = data => {
+    var topcf = document.getElementById("top-cf");
+    var botcf = document.getElementById("bot-cf");
+    var topp = document.getElementById("top-p");
+    var botp = document.getElementById("bot-p");
 
-/* Returns data needed for table next to graph (Team, CF%, Points)*/ 
-function getTableData(){
-    var returnVal = [];
+    var slicedData = [];
 
-    for (var i = 0; i < dataFile.length; i++){
+    for (var i = 0; i < data.length; i++){
         var elem = {
-            Team: dataFile[i][TEAM_KEY],
-            CFPercent: dataFile[i][CF_PERCENT_KEY],
-            Points: dataFile[i][PPG_KEY]
+            Points: data[i][PPG_KEY],
+            CFPercent: data[i][CF_PERCENT_KEY].replace("%",'')
         }
+        
+        slicedData.push(elem);
+    }
+    
+    /* Fetch top 10 CF% */
 
-        returnVal.push(elem);
+    // sort by value
+    var sortedCF = slicedData.sort(function (a, b) {
+        return a.CFPercent - b.CFPercent;
+  });
+
+
+
+
+    console.log(sortedCF[5]["CFPercent"]);
+    let cf_top = 0;
+    let p_top = 0;
+    for (var i = sortedCF.length -1; i > 20; i--) {
+
+        cf_top = cf_top + parseFloat(sortedCF[i]["CFPercent"]);
+        p_top = p_top + parseInt(sortedCF[i]["Points"],10);
+    }
+    p_top = p_top / 10;
+    cf_top = cf_top / 10;
+    topcf.innerHTML = cf_top.toFixed(2);
+    topp.innerHTML = p_top.toFixed(1);
+
+
+    /* Fetch bot 10 CF%*/
+
+
+    let cf_bot = 0;
+    let p_bot = 0;
+    for (var i = 0; i < 10; i++) {
+
+        cf_bot = cf_bot + parseFloat(sortedCF[i]["CFPercent"]);
+        p_bot = p_bot + parseInt(sortedCF[i]["Points"],10);
     }
 
-    return returnVal;
+    cf_bot = cf_bot / 10;
+    p_bot = p_bot / 10;
+    botcf.innerHTML = cf_bot.toFixed(2);
+    botp.innerHTML = p_bot.toFixed(1);
+
+
+
+
+
+
 }
-
-
-
 
 
 export const init = async () => {
@@ -246,6 +287,7 @@ export const init = async () => {
     currentData = dataFile;
 
     drawCorsiChart(currentData);
+    bindCardText(currentData);
    /* const foodData = await getFoodData();
     originalData = foodData;
     drawFoodChart(foodData);*/

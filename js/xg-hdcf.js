@@ -59,7 +59,6 @@ const drawXGChart = originalData => {
     
     }
 
-    console.log(slicedData);
 
     var scatterData = [];
 
@@ -74,7 +73,6 @@ const drawXGChart = originalData => {
     }
 
 
-    console.log(scatterData);
 
     const chartData = {
         datasets: [{

@@ -75,7 +75,6 @@ const drawPDOChart = originalData => {
     }
 
 
-    console.log(scatterData);
 
     const chartData = {
         datasets: [{
