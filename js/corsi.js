@@ -251,7 +251,7 @@ const bindCardText = data => {
     }
     p_top = p_top / 10;
     cf_top = cf_top / 10;
-    topcf.innerHTML = cf_top.toFixed(2);
+    topcf.innerHTML = cf_top.toFixed(2).toString() + "%";
     topp.innerHTML = p_top.toFixed(1);
 
 
@@ -268,7 +268,7 @@ const bindCardText = data => {
 
     cf_bot = cf_bot / 10;
     p_bot = p_bot / 10;
-    botcf.innerHTML = cf_bot.toFixed(2);
+    botcf.innerHTML = cf_bot.toFixed(2).toString() + "%";
     botp.innerHTML = p_bot.toFixed(1);
 
 

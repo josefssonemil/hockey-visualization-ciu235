@@ -3,15 +3,10 @@ body {
   
   
   font-family: 'Manrope', sans-serif;
-  /*font-family: 'Noto Sans', sans-serif; */
-
-/* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#205072+0,329d9c+100 */
-background: #205072; /* Old browsers */
-background: -moz-linear-gradient(-45deg,  #205072 0%, #329d9c 100%); /* FF3.6-15 */
-background: -webkit-linear-gradient(-45deg,  #205072 0%,#329d9c 100%); /* Chrome10-25,Safari5.1-6 */
-background: linear-gradient(135deg,  #205072 0%,#329d9c 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#205072', endColorstr='#329d9c',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
-
+  background: #c1c8e4;  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to bottom, #c1c8e4, #84ceeb);  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to bottom, #c1c8e4, #84ceeb); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  
 }
 
 
@@ -80,3 +75,60 @@ h1 {
 }
 
 
+
+
+
+.card-body .content {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  height: 100%;
+  z-index: 1;
+  position: relative;
+  text-transform: uppercase;
+  padding-top: 6px;
+}
+.card-body .content-main-text .fa {
+  position: absolute;
+  left: 0;
+  right: 0;
+  margin: auto;
+  background: inherit;
+  font-size: 4.8rem;
+  -webkit-transform: translateY(-10px);
+          transform: translateY(-10px);
+}
+
+.card-body .content-accent {
+  font-size: 4.5rem;
+  font-weight: 100;
+  text-align: left;
+}
+
+.card .content-main-text {
+  height: 150px;
+  background: inherit;
+  opacity: 87%;
+}
+.card .content-sub-text {
+  font-size: 1.2rem;
+  font-weight: 300;
+  text-align: left;
+  white-space: nowrap;
+  opacity: 87%;
+}
+
+.bg-card {
+  background-color: #56c596;
+  background-image: linear-gradient(315deg, #5ab9ea 0%, #5680e9 74%);
+}
