@@ -22,6 +22,7 @@ const get1617PlayoffsData = async () => d3.csv("/./data/nhl/nhl-16-17-playoffs.c
 const get1516RegData = async () => d3.csv("/./data/nhl/nhl-15-16-reg.csv");
 const get1516PlayoffsData = async () => d3.csv("/./data/nhl/nhl-15-16-playoffs.csv");
 
+var allSeasons = [];
 
 var chartColors = {
 	red: 'rgb(255, 99, 132)',
@@ -241,7 +242,6 @@ const bindCardText = data => {
 
 
 
-    console.log(sortedCF[5]["CFPercent"]);
     let cf_top = 0;
     let p_top = 0;
     for (var i = sortedCF.length -1; i > 20; i--) {
@@ -270,27 +270,95 @@ const bindCardText = data => {
     p_bot = p_bot / 10;
     botcf.innerHTML = cf_bot.toFixed(2).toString() + "%";
     botp.innerHTML = p_bot.toFixed(1);
+}
+
+
+const updateDataSet = () => {
+
+    let slicedData = [];
+
+    for (var i = 0; i < currentData.length; i++){
+
+        var team = currentData[i][TEAM_KEY];
+        var cf = currentData[i][CF_KEY];
+        var ca = currentData[i][CA_KEY];
+        var cfp = currentData[i][CF_PERCENT_KEY];
+
+        var elem = {
+            Team: team,
+            CF: cf,
+            CA: ca,
+            CFPercent: cfp
+        }
+        
+        slicedData.push(elem);
+    
+    }
+
+
+    var scatterData = [];
+
+    for (var i = 0; i < slicedData.length; i++){
+        var elem = 
+        {
+            x: slicedData[i][CF_KEY] * 60 / (currentData[i][TOI_KEY])  ,
+            y: slicedData[i][CA_KEY] * 60 / (currentData[i][TOI_KEY])
+        }
+
+        scatterData.push(elem);
+    }
+
+    chart.data.datasets = scatterData;
+    
+    chart.update();
+}
 
 
 
+function toggleSeason(season_id) {
+    console.log("toggling season:" + season_id);
+    currentData = allSeasons[season_id];
 
+    updateDataSet();
 
-
+    bindCardText(currentData);
 }
 
 
 export const init = async () => {
 
-    const dataFile = await get1819RegData();
+    var seasonOneData = await get1819RegData();
+    var seasonTwoData = await get1718RegData();
+    var seasonThreeData = await get1617RegData();
+    var seasonFourData = await get1516RegData();
 
-    //console.log(dataFile);
-    currentData = dataFile;
+    allSeasons = [seasonOneData, seasonTwoData, seasonThreeData, seasonFourData];
 
+    console.log(allSeasons);
+    currentData = allSeasons[0];
+
+    /* Default */
     drawCorsiChart(currentData);
     bindCardText(currentData);
-   /* const foodData = await getFoodData();
-    originalData = foodData;
-    drawFoodChart(foodData);*/
 
+
+         /* Add event listeners to buttons */ 
+
+    /* 2018 - 2019 */
+    const seasonOne = document.getElementById("one");
+    seasonOne.addEventListener("click", () => { toggleSeason(0); }, false);
+
+    /* 2017 - 2018 */
+    const seasonTwo = document.getElementById("two");
+    seasonTwo.addEventListener("click", () => { toggleSeason(1); }, false);
+
+    /* 2016 - 2017 */
+    const seasonThree = document.getElementById("three");
+    seasonThree.addEventListener("click", () => { toggleSeason(2); }, false);
+
+    /* 2015 - 2016 */
+    const seasonFour = document.getElementById("four");
+    seasonFour.addEventListener("click", () => { toggleSeason(3); }, false);
 
   };
+
