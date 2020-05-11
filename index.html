@@ -105,18 +105,18 @@
             <div class="col-sm-8">
               <canvas id="corsiChart" width="50%;"> </canvas>
               <h5 class="center">Show season</h5>
-              <div class="btn-group btn-group-toggle center" data-toggle="buttons">
+              <div class="btn-group btn-group-toggle center" data-toggle="buttons" id="seasonToggle">
                 <label class="btn btn-secondary active">
-                  <input type="radio" name="options" id="one" autocomplete="off" checked> 2018-2019
+                  <input type="radio" name="options" id="btnOne" value="0" autocomplete="off" checked> 2018-2019
                 </label>
                 <label class="btn btn-secondary">
-                  <input type="radio" name="options" id="two" autocomplete="off"> 2017-2018
+                  <input type="radio" name="options" id="btnTwo" value="1" autocomplete="off"> 2017-2018
                 </label>
                 <label class="btn btn-secondary">
-                  <input type="radio" name="options" id="three" autocomplete="off"> 2016-2017
+                  <input type="radio" name="options" id="btnThree" value="2"  autocomplete="off"> 2016-2017
                 </label>
                 <label class="btn btn-secondary">
-                  <input type="radio" name="options" id="four" autocomplete="off"> 2015-2016
+                  <input type="radio" name="options" id="btnFour" value="3" autocomplete="off"> 2015-2016
                 </label>
               </div>
             </div>
@@ -274,10 +274,8 @@
 
 
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
-  <script src="js/vendor/modernizr-3.8.0.min.js"></script>
-  <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
-  <script>window.jQuery || document.write('<script src="js/vendor/jquery-3.4.1.min.js"><\/script>')</script>
  
  <script type="text/javascript" src="https://unpkg.com/pageable@latest/dist/pageable.min.js"></script>
  <script src="https://d3js.org/d3.v5.min.js"></script>

@@ -66,8 +66,10 @@ const init = async () => {
   corsiChart.init();
   pdoChart.init();
   xgChart.init();
+  
 
 };
+
 
 window.onload = init;
 
