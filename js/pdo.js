@@ -1,10 +1,10 @@
 let chart;
 let currentData;
-
+let allSeasons = [];
 const SH_KEY = "SH%";
 const SV_KEY = "SV%";
 const TEAM_KEY = "Team";
-const PPG_KEY = "Points %";
+const PPG_KEY = "Points";
 const PDO_KEY = "PDO";
 
 
@@ -212,22 +212,174 @@ const drawPDOChart = originalData => {
 
 
 
+const updateDataSet = () => {
+
+    let slicedData = [];
+
+    for (var i = 0; i < currentData.length; i++){
+
+        var team = currentData[i][TEAM_KEY];
+        var sv = currentData[i][SV_KEY];
+        var sh = currentData[i][SH_KEY];
+        var pdo = currentData[i][PDO_KEY]
+        var points = currentData[i][PPG_KEY];
+
+        var elem = {
+            Team: team,
+            SV: sv,
+            SH: sh,
+            PDO: pdo,
+            Points: points
+        }
+        
+        slicedData.push(elem);
+    
+    }
+
+
+    var scatterData = [];
+
+    for (var i = 0; i < slicedData.length; i++){
+        var elem = 
+        {
+            x: slicedData[i]["SH"] ,
+            y: slicedData[i]["SV"]
+        }
+
+        scatterData.push(elem);
+    }
+
+    const chartData = {
+        datasets: [{
+            label: 'Team',
+            data: scatterData,
+            backgroundColor: chartColors.green,
+            borderColor: 'black',
+            pointRadius: 10,
+            pointHitRadius: 10,
+            pointHoverRadius: 15,
+            pointHoverBackgroundColor: chartColors.orange
+
+        }]
+    }
+
+    chart.data = chartData;
+
+    chart.update();
+}
+
+
+function findWithAttr(array, attr, value) {
+    for(var i = 0; i < array.length; i += 1) {
+        if(array[i][attr] === value) {
+            return i;
+        }
+    }
+    return -1;
+}
 
 
 
 
+const bindCardText = data => {
+    var cardOne = document.getElementById("card-1-pdo");
+    var cardOneSubText = document.getElementById("team-name-pdo-highest");
+
+    var cardTwo = document.getElementById("card-2-pdo");
+    var cardTwoSubText = document.getElementById("team-name-pdo-lowest");
+
+    var cardThree = document.getElementById("card-3-pdo");
+    var cardFour = document.getElementById("card-4-pdo");
+
+    var slicedData = [];
+
+    for (var i = 0; i < data.length; i++) {
+        var elem = {
+            Points: data[i][PPG_KEY],
+            PDO: data[i][PDO_KEY],
+            Team: data[i][TEAM_KEY]
+        }
+
+        slicedData.push(elem);
+    }
+
+
+    slicedData.sort(function(a, b){
+        return a.PDO + b.PDO;
+    });    
+    console.log(slicedData);
+
+
+    // sort by value
+    var sortedByPDO = slicedData.sort(function(a, b){
+        return a.PDO - b.PDO;
+    });
+
+
+
+    console.log(sortedByPDO);
+
+
+    var sortedByPoints = slicedData.sort(function (a, b) {
+        return a.Points - b.Points;
+    });
+
+    console.log(sortedByPoints);
+
+    let lowestPDO = sortedByPDO[0][PDO_KEY];
+    let highestPDO = sortedByPDO[sortedByPDO.length - 1][PDO_KEY];
+
+    cardOne.innerHTML = highestPDO;
+    let teamHighestPDO;
+    let teamHighestPDORanking;
+    let index1 = findWithAttr(sortedByPoints, 'Team', sortedByPDO[sortedByPDO.length - 1][TEAM_KEY]);
+
+
+    cardOneSubText.innerHTML = sortedByPDO[sortedByPDO.length - 1][TEAM_KEY] + "("  + index1 + ")";
+
+    
+
+
+    cardTwo.innerHTML = lowestPDO;
+    let teamLowestPDO;
+    let teamLowestPDORanking;
+    let index2 = findWithAttr(sortedByPoints, 'Team', sortedByPDO[0][TEAM_KEY]);
+
+    cardTwoSubText.innerHTML = sortedByPDO[0][TEAM_KEY] + "("  + index2 + ")";
+
+    
+}
+
+function toggleSeason(season_id) {
+    currentData = allSeasons[season_id];
+
+    updateDataSet();
+
+    bindCardText(currentData);
+}
+
+
+$(document).ready(function(){
+
+    $('#seasonTogglePDO .btn').click( function () {
+        let season_id = $(this).find('input').val();
+        toggleSeason(season_id);
+    });
+})
 
 export const init = async () => {
 
-    const dataFile = await get1819RegData();
+    var seasonOneData = await get1819RegData();
+    var seasonTwoData = await get1718RegData();
+    var seasonThreeData = await get1617RegData();
+    var seasonFourData = await get1516RegData();
 
-    //console.log(dataFile);
-    currentData = dataFile;
+    allSeasons = [seasonOneData, seasonTwoData, seasonThreeData, seasonFourData];
 
+    currentData = allSeasons[0];
+
+    /* Default */
     drawPDOChart(currentData);
-   /* const foodData = await getFoodData();
-    originalData = foodData;
-    drawFoodChart(foodData);*/
+    bindCardText(currentData);
 
-
-  };
+};

@@ -1,11 +1,14 @@
 let chart;
 let currentData;
+let allSeasons = [];
 
 const XGF_KEY = "xGF";
 const XGA_KEY = "xGA";
 const XG_PERCENT_KEY= "xGF%";
+const HDCF_PERCENT_KEY = "HDCF%";
 const TEAM_KEY = "Team";
-const PPG_KEY = "Points %";
+const PPG_KEY = "Points";
+const TOI_KEY = "TOI";
 
 const DOT_COLOR = "rgb(249,131,20)";
 
@@ -35,7 +38,6 @@ var chartColors = {
 var color = Chart.helpers.color;
 
 
-/* Strips of unnecessary data points and keeping (Team, CF, CA) before passing it to the draw function*/
 const drawXGChart = originalData => {
 
     let slicedData = [];
@@ -46,12 +48,14 @@ const drawXGChart = originalData => {
         var xgf = originalData[i][XGF_KEY];
         var xga = originalData[i][XGF_KEY];
         var xgp = originalData[i][XG_PERCENT_KEY];
+        var hdcf = originalData[i][HDCF_PERCENT_KEY];
         var points = originalData[i][PPG_KEY];
         var elem = {
             Team: team,
             XGF: xgf,
             XGA: xga,
             XGPercent: xgp,
+            HDCFPercent: hdcf,
             Points: points
         }
         
@@ -60,24 +64,27 @@ const drawXGChart = originalData => {
     }
 
 
-    var scatterData = [];
+    var bubbleData = [];
 
     for (var i = 0; i < slicedData.length; i++){
         var elem = 
         {
-            x: slicedData[i]["XGF"]  ,
-            y: slicedData[i]["XGA"]
+            x: slicedData[i]["XGPercent"]  ,
+            y: slicedData[i]["HDCFPercent"]  ,
+            r: slicedData[i]["Points"] / 10
         }
 
-        scatterData.push(elem);
+        bubbleData.push(elem);
     }
+
+    console.log(bubbleData);
 
 
 
     const chartData = {
         datasets: [{
             label: 'Expected goals (for and against) for NHL teams)',
-            data: scatterData,
+            data: bubbleData,
             backgroundColor: chartColors.green,
             borderColor: 'black',
             pointRadius: 10,
@@ -95,7 +102,7 @@ const drawXGChart = originalData => {
                 label: function(tooltipItem, data) {
                     var label = data.datasets[tooltipItem.datasetIndex].label || '';
                     var i = tooltipItem.index;
-                    label = slicedData[i][TEAM_KEY] + " xG%: " + originalData[i][XG_PERCENT_KEY];
+                    label = slicedData[i][TEAM_KEY] + " - Points: " + originalData[i][PPG_KEY];
                  
                     return label;
                 }
@@ -199,7 +206,7 @@ const drawXGChart = originalData => {
     var ctx = document.getElementById("xgChart").getContext("2d");
 
     chart = new Chart(ctx, {
-        type: 'scatter',
+        type: 'bubble',
         data: chartData,
         options: options,
         plugins: plugins
@@ -208,25 +215,130 @@ const drawXGChart = originalData => {
 
 
 
+const updateDataSet = () => {
 
 
+    let slicedData = [];
+
+    for (var i = 0; i < currentData.length; i++){
+
+        var team = currentData[i][TEAM_KEY];
+        var xgf = currentData[i][XGF_KEY];
+        var xga = currentData[i][XGF_KEY];
+        var xgp = currentData[i][XG_PERCENT_KEY];
+        var hdcf = currentData[i][HDCF_PERCENT_KEY];
+        var points = currentData[i][PPG_KEY];
+        var toi = currentData[i][TOI_KEY];
+        var elem = {
+            Team: team,
+            XGF: xgf,
+            XGA: xga,
+            XGPercent: xgp,
+            HDCFPercent: hdcf,
+            Points: points,
+            TOI: toi
+        }
+        
+        slicedData.push(elem);
+    
+    }
 
 
+    var bubbleData = [];
+
+    for (var i = 0; i < slicedData.length; i++){
+        var elem = 
+        {
+            x: slicedData[i]["XGPercent"]  ,
+            y: slicedData[i]["HDCFPercent"] ,
+            r: parseFloat(slicedData[i]["Points"] / 10)
+        }
+
+        bubbleData.push(elem);
+    }
+
+
+    const chartData = {
+        datasets: [{
+            label: 'Team',
+            data: bubbleData,
+            backgroundColor: chartColors.green,
+            borderColor: 'black',
+            pointRadius: 10,
+            pointHitRadius: 10,
+            pointHoverRadius: 15,
+            pointHoverBackgroundColor: chartColors.orange
+
+        }]
+    }
+
+    chart.data = chartData;
+
+    chart.update();
+}
+
+
+const bindCardText = data => {
+    var cardOne = document.getElementById("card-1-xg");
+    var cardOneSubText = document.getElementById("card-1-xg-subtext");
+
+    var cardTwo = document.getElementById("card-2-xg");
+    var cardTwoSubText = document.getElementById("card-2-xg-subtext");
+
+    var cardThree = document.getElementById("card-3-xg");
+    var cardFour = document.getElementById("card-4-xg");
+
+
+    var highestHCDF = 0;
+    for (var i = 0; i < data.length; i++){
+        if (data[i][HDCF_PERCENT_KEY].replace("%", '') > highestHCDF){
+            data[i][HDCF_PERCENT_KEY] = highestHCDF;
+        }
+    }
+
+    
+
+    cardOne.innerHTML = highestHCDF.toFixed(2).toString() + "%";
+
+    
+}
+
+function toggleSeason(season_id) {
+    currentData = allSeasons[season_id];
+
+    updateDataSet();
+
+    bindCardText(currentData);
+}
+
+
+$(document).ready(function(){
+
+    $('#seasonToggleXG .btn').click( function () {
+        let season_id = $(this).find('input').val();
+        toggleSeason(season_id);
+        console.log("toggle xg")
+    });
+})
 
 
 
 
 export const init = async () => {
 
-    const dataFile = await get1819RegData();
+    var seasonOneData = await get1819RegData();
+    var seasonTwoData = await get1718RegData();
+    var seasonThreeData = await get1617RegData();
+    var seasonFourData = await get1516RegData();
 
-    //console.log(dataFile);
-    currentData = dataFile;
+    allSeasons = [seasonOneData, seasonTwoData, seasonThreeData, seasonFourData];
+
+    currentData = allSeasons[0];
+
 
     drawXGChart(currentData);
-   /* const foodData = await getFoodData();
-    originalData = foodData;
-    drawFoodChart(foodData);*/
+
+    bindCardText(currentData);
 
 
   };

@@ -337,7 +337,7 @@ function toggleSeason(season_id) {
 
 $(document).ready(function(){
 
-    $('.btn').click( function () {
+    $('#seasonToggle .btn').click( function () {
         let season_id = $(this).find('input').val();
         toggleSeason(season_id);
     });
@@ -352,7 +352,6 @@ export const init = async () => {
 
     allSeasons = [seasonOneData, seasonTwoData, seasonThreeData, seasonFourData];
 
-    console.log(allSeasons);
     currentData = allSeasons[0];
 
     /* Default */
