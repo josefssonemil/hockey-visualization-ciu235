@@ -40,60 +40,9 @@ var color = Chart.helpers.color;
 
 const drawXGChart = originalData => {
 
-    let slicedData = [];
-
-    for (var i = 0; i < originalData.length; i++){
-
-        var team = originalData[i][TEAM_KEY];
-        var xgf = originalData[i][XGF_KEY];
-        var xga = originalData[i][XGF_KEY];
-        var xgp = originalData[i][XG_PERCENT_KEY];
-        var hdcf = originalData[i][HDCF_PERCENT_KEY];
-        var points = originalData[i][PPG_KEY];
-        var elem = {
-            Team: team,
-            XGF: xgf,
-            XGA: xga,
-            XGPercent: xgp,
-            HDCFPercent: hdcf,
-            Points: points
-        }
-        
-        slicedData.push(elem);
-    
-    }
 
 
-    var bubbleData = [];
-
-    for (var i = 0; i < slicedData.length; i++){
-        var elem = 
-        {
-            x: slicedData[i]["XGPercent"]  ,
-            y: slicedData[i]["HDCFPercent"]  ,
-            r: slicedData[i]["Points"] / 10
-        }
-
-        bubbleData.push(elem);
-    }
-
-    console.log(bubbleData);
-
-
-
-    const chartData = {
-        datasets: [{
-            label: 'Expected goals (for and against) for NHL teams)',
-            data: bubbleData,
-            backgroundColor: chartColors.green,
-            borderColor: 'black',
-            pointRadius: 10,
-            pointHitRadius: 10,
-            pointHoverRadius: 15,
-            pointHoverBackgroundColor: chartColors.orange 
-           
-        }]
-    }
+    const chartData = organizeData();
 
     const options = {
         //pointRadius: 200,
@@ -102,7 +51,7 @@ const drawXGChart = originalData => {
                 label: function(tooltipItem, data) {
                     var label = data.datasets[tooltipItem.datasetIndex].label || '';
                     var i = tooltipItem.index;
-                    label = slicedData[i][TEAM_KEY] + " - Points: " + originalData[i][PPG_KEY];
+                    label = currentData[i][TEAM_KEY] + " - Points: " + currentData[i][PPG_KEY];
                  
                     return label;
                 }
@@ -214,10 +163,7 @@ const drawXGChart = originalData => {
 }
 
 
-
-const updateDataSet = () => {
-
-
+const organizeData = () => {
     let slicedData = [];
 
     for (var i = 0; i < currentData.length; i++){
@@ -250,27 +196,38 @@ const updateDataSet = () => {
         var elem = 
         {
             x: slicedData[i]["XGPercent"]  ,
-            y: slicedData[i]["HDCFPercent"] ,
-            r: parseFloat(slicedData[i]["Points"] / 10)
+            y: slicedData[i]["HDCFPercent"]  ,
+            r: slicedData[i]["Points"] / 10
         }
 
         bubbleData.push(elem);
     }
 
 
+
     const chartData = {
         datasets: [{
-            label: 'Team',
+            label: 'Expected goals (for and against) for NHL teams)',
             data: bubbleData,
             backgroundColor: chartColors.green,
             borderColor: 'black',
             pointRadius: 10,
             pointHitRadius: 10,
             pointHoverRadius: 15,
-            pointHoverBackgroundColor: chartColors.orange
-
+            pointHoverBackgroundColor: chartColors.orange 
+           
         }]
-    }
+    };
+
+    return chartData;
+}
+
+const updateDataSet = () => {
+
+
+
+
+    const chartData = organizeData();
 
     chart.data = chartData;
 

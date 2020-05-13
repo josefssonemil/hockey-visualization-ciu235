@@ -39,56 +39,7 @@ var color = Chart.helpers.color;
 /* Strips of unnecessary data points and keeping (Team, CF, CA) before passing it to the draw function*/
 const drawPDOChart = originalData => {
 
-    let slicedData = [];
-
-    for (var i = 0; i < originalData.length; i++){
-
-        var team = originalData[i][TEAM_KEY];
-        var sv = originalData[i][SV_KEY];
-        var sh = originalData[i][SH_KEY];
-        var pdo = originalData[i][PDO_KEY]
-        var points = originalData[i][PPG_KEY];
-
-        var elem = {
-            Team: team,
-            SV: sv,
-            SH: sh,
-            PDO: pdo,
-            Points: points
-        }
-        
-        slicedData.push(elem);
-    
-    }
-
-
-    var bubbleData = [];
-
-    for (var i = 0; i < slicedData.length; i++){
-        var elem = 
-        {
-            x: slicedData[i]["SH"],
-            y: slicedData[i]["SV"],
-            r: slicedData[i]["Points"] / 10
-        }
-        bubbleData.push(elem);
-    }
-
-
-
-    const chartData = {
-        datasets: [{
-            label: 'Shot percentage (SH%) and Save percentage (SV%) for NHL teams',
-            data: bubbleData,
-            backgroundColor: chartColors.green,
-            borderColor: 'black',
-            pointRadius: 10,
-            pointHitRadius: 10,
-            pointHoverRadius: 15,
-            pointHoverBackgroundColor: chartColors.orange 
-           
-        }]
-    }
+    const chartData = organizeData();
 
     const options = {
         //pointRadius: 200,
@@ -97,7 +48,7 @@ const drawPDOChart = originalData => {
                 label: function(tooltipItem, data) {
                     var label = data.datasets[tooltipItem.datasetIndex].label || '';
                     var i = tooltipItem.index;
-                    label = slicedData[i][TEAM_KEY] + ": " + "PDO: " + slicedData[i][PDO_KEY]; 
+                    label = currentData[i][TEAM_KEY] + ": " + "PDO: " + currentData[i][PDO_KEY]; 
                     return label;
                 }
             }
@@ -208,11 +159,7 @@ const drawPDOChart = originalData => {
 }
 
 
-
-
-
-
-const updateDataSet = () => {
+const organizeData = () => {
 
     let slicedData = [];
 
@@ -263,9 +210,17 @@ const updateDataSet = () => {
             pointHoverBackgroundColor: chartColors.orange
 
         }]
-    }
+    };
 
-    chart.data = chartData;
+    return chartData;
+}
+
+
+
+const updateDataSet = () => {
+
+
+    chart.data = organizeData();
 
     chart.update();
 }

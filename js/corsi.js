@@ -39,94 +39,34 @@ var chartColors = {
 };
 
 var color = Chart.helpers.color;
+var ctx = document.getElementById("corsiChart").getContext("2d");
 
 
 /* Strips of unnecessary data points and keeping (Team, CF, CA) before passing it to the draw function*/
 const drawCorsiChart = originalData => {
 
 
-    var ctx = document.getElementById("corsiChart").getContext("2d");
-
-
-    var width = window.innerWidth || document.body.clientWidth;
-    var gradientStroke = ctx.createLinearGradient(0, 0, width, 0);
-
-    gradientStroke.addColorStop(0, "#7C4DFF");
-    gradientStroke.addColorStop(0.3,  "#448AFF");
-    gradientStroke.addColorStop(0.6, "#00BCD4");
-    gradientStroke.addColorStop(0.9, "#1DE9B6");
-
-
-    let slicedData = [];
-
-    for (var i = 0; i < originalData.length; i++) {
-
-        var team = originalData[i][TEAM_KEY];
-        var cf = originalData[i][CF_KEY];
-        var ca = originalData[i][CA_KEY];
-        var cfp = originalData[i][CF_PERCENT_KEY];
-        var points = originalData[i][PPG_KEY];
-
-        var elem = {
-            Team: team,
-            CF: cf,
-            CA: ca,
-            CFPercent: cfp,
-            Points: points
-        }
-
-        slicedData.push(elem);
-
-    }
-
-
-
-    var bubbleData = [];
-
-    for (var i = 0; i < slicedData.length; i++){
-        var elem = 
-        {
-            x: slicedData[i][CF_KEY] * 60 / (originalData[i][TOI_KEY]),
-            y: slicedData[i][CA_KEY] * 60 / (originalData[i][TOI_KEY]),
-            r: slicedData[i]["Points"] / 10
-        }
-
-        bubbleData.push(elem);
-    }
 
 
 
 
 
-    const chartData = {
-        datasets: [{
-            label: 'Team',
-            data: bubbleData,
-            borderColor: gradientStroke,
-            pointBorderColor: gradientStroke,
-            pointBackgroundColor: gradientStroke,
-            pointHoverBackgroundColor: gradientStroke,
-            pointHoverBorderColor: gradientStroke,
-            pointBorderWidth: 10,
-            pointHoverRadius: 15,
-            pointHoverBorderWidth: 1,
-            pointRadius: 7,
-            fill: false,
-            borderWidth: 4,
-
-        }]
-    }
-
+    const chartData = organizeData();
 
 
     const options = {
+
+
+        animation: {
+            easing: "easeInOutQuad"
+          },
         //pointRadius: 200,
         tooltips: {
             callbacks: {
                 label: function (tooltipItem, data) {
                     var label = data.datasets[tooltipItem.datasetIndex].label || '';
                     var i = tooltipItem.index;
-                    label = slicedData[i][TEAM_KEY] + ": " + "CF60: " + (slicedData[i][CF_KEY] / (originalData[i][TOI_KEY] / 60)).toFixed(2) + "\n CA60: " + (slicedData[i][CA_KEY] / (originalData[i][TOI_KEY] / 60)).toFixed(2);
+                    label = currentData[i][TEAM_KEY] + ": " + "CF60: " + (currentData[i][CF_KEY] / (currentData[i][TOI_KEY] / 60)).toFixed(2) + "\n CA60: " + (currentData[i][CA_KEY] / (currentData[i][TOI_KEY] / 60)).toFixed(2);
 
                     return label;
                 }
@@ -139,14 +79,14 @@ const drawCorsiChart = originalData => {
         },
         title: {
             display: true,
-            text: "Corsi For per 60 (CF60) and Corsi Against per 60 (CA60) for all NHL teams",
+            text: "Corsi For per 60 (CF60) and Corsi Against per 60 (CA60) for all NHL teams. Bubble size represents wins.",
             fontColor: "white"
 
         },
         scales: {
             yAxes: [{
                     display: true,
-                    labelString: "CA60",
+                    labelString: "testtest",
                     fontColor: chartColors.white,
 
                     ticks: {
@@ -237,6 +177,63 @@ const drawCorsiChart = originalData => {
 
 
 
+const organizeData = () => {
+    let slicedData = [];
+
+    for (var i = 0; i < currentData.length; i++) {
+
+        var team = currentData[i][TEAM_KEY];
+        var cf = currentData[i][CF_KEY];
+        var ca = currentData[i][CA_KEY];
+        var cfp = currentData[i][CF_PERCENT_KEY];
+        var points = currentData[i][PPG_KEY];
+
+        var elem = {
+            Team: team,
+            CF: cf,
+            CA: ca,
+            CFPercent: cfp,
+            Points: points
+        }
+
+        slicedData.push(elem);
+
+    }
+
+
+    var bubbleData = [];
+
+    for (var i = 0; i < slicedData.length; i++){
+        var elem = 
+        {
+            x: slicedData[i][CF_KEY] * 60 / (currentData[i][TOI_KEY]),
+            y: slicedData[i][CA_KEY] * 60 / (currentData[i][TOI_KEY]),
+            r: slicedData[i]["Points"] / 10
+        }
+
+        bubbleData.push(elem);
+    }
+
+
+
+    const chartData = {
+        datasets: [{
+            label: 'Team',
+            data: bubbleData,
+            backgroundColor: chartColors.orange,
+            borderColor: 'black',
+            pointRadius: 10,
+            pointHitRadius: 10,
+            pointHoverRadius: 15,
+            pointHoverBackgroundColor: chartColors.orange
+
+        }]
+    };
+
+    return chartData;
+}
+
+
 const bindCardText = data => {
     var topcf = document.getElementById("top-cf");
     var botcf = document.getElementById("bot-cf");
@@ -297,54 +294,7 @@ const bindCardText = data => {
 
 const updateDataSet = () => {
 
-    let slicedData = [];
-
-    for (var i = 0; i < currentData.length; i++) {
-
-        var team = currentData[i][TEAM_KEY];
-        var cf = currentData[i][CF_KEY];
-        var ca = currentData[i][CA_KEY];
-        var cfp = currentData[i][CF_PERCENT_KEY];
-
-        var elem = {
-            Team: team,
-            CF: cf,
-            CA: ca,
-            CFPercent: cfp
-        }
-
-        slicedData.push(elem);
-
-    }
-
-
-    var bubbleData = [];
-
-    for (var i = 0; i < slicedData.length; i++){
-        var elem = 
-        {
-            x: slicedData[i][CF_KEY] * 60 / (originalData[i][TOI_KEY]),
-            y: slicedData[i][CA_KEY] * 60 / (originalData[i][TOI_KEY]),
-            r: parseFloat(slicedData[i]["Points"] / 10)
-        }
-
-        bubbleData.push(elem);
-    }
-
-    const chartData = {
-        datasets: [{
-            label: 'Team',
-            data: bubbleData,
-            backgroundColor: chartColors.green,
-            borderColor: 'black',
-            pointRadius: 10,
-            pointHitRadius: 10,
-            pointHoverRadius: 15,
-            pointHoverBackgroundColor: chartColors.orange
-
-        }]
-    }
-
+    const chartData = organizeData();
     chart.data = chartData;
 
     chart.update();
