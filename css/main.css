@@ -3,11 +3,15 @@ body {
   
   
   font-family: 'Manrope', sans-serif;
-  background: #1a2f4b;  /* fallback for old browsers */
+ 
+  /*#051e3e • #251e3e • #451e3e • #651e3e • #851e3e
+*/
+
+  background: #222738;  /* fallback for old browsers */
 
   
-}
 
+}
 
 h1,h2,h3,h4,h5,p {
   color: #FFFFFF;
@@ -126,9 +130,13 @@ h1 {
   white-space: nowrap;
   opacity: 87%;
 }
+.card {
+  background:linear-gradient(135deg, #9299a0 0%,#5d6874 100%);
+
+}
 
 .bg-card {
-  background-color: #28475c;
+  opacity:89%;
 }
 
 .test {

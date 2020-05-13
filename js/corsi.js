@@ -44,6 +44,19 @@ var color = Chart.helpers.color;
 /* Strips of unnecessary data points and keeping (Team, CF, CA) before passing it to the draw function*/
 const drawCorsiChart = originalData => {
 
+
+    var ctx = document.getElementById("corsiChart").getContext("2d");
+
+
+    var width = window.innerWidth || document.body.clientWidth;
+    var gradientStroke = ctx.createLinearGradient(0, 0, width, 0);
+
+    gradientStroke.addColorStop(0, "#7C4DFF");
+    gradientStroke.addColorStop(0.3,  "#448AFF");
+    gradientStroke.addColorStop(0.6, "#00BCD4");
+    gradientStroke.addColorStop(0.9, "#1DE9B6");
+
+
     let slicedData = [];
 
     for (var i = 0; i < originalData.length; i++) {
@@ -52,12 +65,14 @@ const drawCorsiChart = originalData => {
         var cf = originalData[i][CF_KEY];
         var ca = originalData[i][CA_KEY];
         var cfp = originalData[i][CF_PERCENT_KEY];
+        var points = originalData[i][PPG_KEY];
 
         var elem = {
             Team: team,
             CF: cf,
             CA: ca,
-            CFPercent: cfp
+            CFPercent: cfp,
+            Points: points
         }
 
         slicedData.push(elem);
@@ -65,16 +80,20 @@ const drawCorsiChart = originalData => {
     }
 
 
-    var scatterData = [];
 
-    for (var i = 0; i < slicedData.length; i++) {
-        var elem = {
+    var bubbleData = [];
+
+    for (var i = 0; i < slicedData.length; i++){
+        var elem = 
+        {
             x: slicedData[i][CF_KEY] * 60 / (originalData[i][TOI_KEY]),
-            y: slicedData[i][CA_KEY] * 60 / (originalData[i][TOI_KEY])
+            y: slicedData[i][CA_KEY] * 60 / (originalData[i][TOI_KEY]),
+            r: slicedData[i]["Points"] / 10
         }
 
-        scatterData.push(elem);
+        bubbleData.push(elem);
     }
+
 
 
 
@@ -82,13 +101,18 @@ const drawCorsiChart = originalData => {
     const chartData = {
         datasets: [{
             label: 'Team',
-            data: scatterData,
-            backgroundColor: chartColors.green,
-            borderColor: 'black',
-            pointRadius: 10,
-            pointHitRadius: 10,
+            data: bubbleData,
+            borderColor: gradientStroke,
+            pointBorderColor: gradientStroke,
+            pointBackgroundColor: gradientStroke,
+            pointHoverBackgroundColor: gradientStroke,
+            pointHoverBorderColor: gradientStroke,
+            pointBorderWidth: 10,
             pointHoverRadius: 15,
-            pointHoverBackgroundColor: chartColors.orange
+            pointHoverBorderWidth: 1,
+            pointRadius: 7,
+            fill: false,
+            borderWidth: 4,
 
         }]
     }
@@ -200,10 +224,11 @@ const drawCorsiChart = originalData => {
 
 
 
-    var ctx = document.getElementById("corsiChart").getContext("2d");
+
+
 
     chart = new Chart(ctx, {
-        type: 'scatter',
+        type: 'bubble',
         data: chartData,
         options: options,
         plugins: plugins
@@ -293,21 +318,23 @@ const updateDataSet = () => {
     }
 
 
-    var scatterData = [];
+    var bubbleData = [];
 
-    for (var i = 0; i < slicedData.length; i++) {
-        var elem = {
-            x: slicedData[i][CF_KEY] * 60 / (currentData[i][TOI_KEY]),
-            y: slicedData[i][CA_KEY] * 60 / (currentData[i][TOI_KEY])
+    for (var i = 0; i < slicedData.length; i++){
+        var elem = 
+        {
+            x: slicedData[i][CF_KEY] * 60 / (originalData[i][TOI_KEY]),
+            y: slicedData[i][CA_KEY] * 60 / (originalData[i][TOI_KEY]),
+            r: parseFloat(slicedData[i]["Points"] / 10)
         }
 
-        scatterData.push(elem);
+        bubbleData.push(elem);
     }
 
     const chartData = {
         datasets: [{
             label: 'Team',
-            data: scatterData,
+            data: bubbleData,
             backgroundColor: chartColors.green,
             borderColor: 'black',
             pointRadius: 10,

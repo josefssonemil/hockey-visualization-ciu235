@@ -62,16 +62,16 @@ const drawPDOChart = originalData => {
     }
 
 
-    var scatterData = [];
+    var bubbleData = [];
 
     for (var i = 0; i < slicedData.length; i++){
         var elem = 
         {
-            x: slicedData[i]["SH"] ,
-            y: slicedData[i]["SV"]
+            x: slicedData[i]["SH"],
+            y: slicedData[i]["SV"],
+            r: slicedData[i]["Points"] / 10
         }
-
-        scatterData.push(elem);
+        bubbleData.push(elem);
     }
 
 
@@ -79,7 +79,7 @@ const drawPDOChart = originalData => {
     const chartData = {
         datasets: [{
             label: 'Shot percentage (SH%) and Save percentage (SV%) for NHL teams',
-            data: scatterData,
+            data: bubbleData,
             backgroundColor: chartColors.green,
             borderColor: 'black',
             pointRadius: 10,
@@ -200,7 +200,7 @@ const drawPDOChart = originalData => {
     var ctx = document.getElementById("PDOChart").getContext("2d");
 
     chart = new Chart(ctx, {
-        type: 'scatter',
+        type: 'bubble',
         data: chartData,
         options: options,
         plugins: plugins
@@ -237,22 +237,24 @@ const updateDataSet = () => {
     }
 
 
-    var scatterData = [];
+
+    var bubbleData = [];
 
     for (var i = 0; i < slicedData.length; i++){
         var elem = 
         {
-            x: slicedData[i]["SH"] ,
-            y: slicedData[i]["SV"]
+            x: slicedData[i]["SH"],
+            y: slicedData[i]["SV"],
+            r: slicedData[i]["Points"] / 10
         }
 
-        scatterData.push(elem);
+        bubbleData.push(elem);
     }
 
     const chartData = {
         datasets: [{
             label: 'Team',
-            data: scatterData,
+            data: bubbleData,
             backgroundColor: chartColors.green,
             borderColor: 'black',
             pointRadius: 10,
