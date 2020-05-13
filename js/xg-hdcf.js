@@ -246,16 +246,22 @@ const bindCardText = data => {
     var cardFour = document.getElementById("card-4-xg");
 
 
-    var highestHCDF = 0;
-    for (var i = 0; i < data.length; i++){
-        if (data[i][HDCF_PERCENT_KEY].replace("%", '') > highestHCDF){
-            data[i][HDCF_PERCENT_KEY] = highestHCDF;
-        }
-    }
 
     
 
-    cardOne.innerHTML = highestHCDF.toFixed(2).toString() + "%";
+    const highestXGTeam = data.reduce((prev, current) => (prev.XG_PERCENT_KEY > current.XG_PERCENT_KEY) ? prev : current);
+
+    console.log(highestXGTeam);
+    console.log(highestXGTeam.XG_PERCENT_KEY);
+
+    const lowestXGTeam = data.reduce((prev, current) => (prev.XG_PERCENT_KEY > current.XG_PERCENT_KEY) ? prev : current);
+
+    const highestHDCFTeam = data.reduce((prev, current) => (prev.HDCF_PERCENT_KEY > current.HDCF_PERCENT_KEY) ? prev : current);
+    const lowestHDCFTeam = data.reduce((prev, current) => (prev.HDCF_PERCENT_KEY > current.HDCF_PERCENT_KEY) ? prev : current);
+
+    
+
+    cardOne.innerHTML = highestXGTeam.TEAM_KEY;
 
     
 }

@@ -246,65 +246,29 @@ const bindCardText = data => {
     var cardTwoSubText = document.getElementById("team-name-pdo-lowest");
 
     var cardThree = document.getElementById("card-3-pdo");
+    var cardThreeSubText = document.getElementById("card-3-pdo-subtext");
+
     var cardFour = document.getElementById("card-4-pdo");
+    var cardFourSubText = document.getElementById("card-4-pdo-subtext");
 
-    var slicedData = [];
-
-    for (var i = 0; i < data.length; i++) {
-        var elem = {
-            Points: data[i][PPG_KEY],
-            PDO: data[i][PDO_KEY],
-            Team: data[i][TEAM_KEY]
-        }
-
-        slicedData.push(elem);
-    }
+    console.log(data);
 
 
-    slicedData.sort(function(a, b){
-        return a.PDO + b.PDO;
-    });    
-    console.log(slicedData);
+    const highestPDOTeam = data.reduce((prev, current) => (prev.PDO > current.PDO) ? prev : current);
+
+    const lowestPDOTeam = data.reduce((prev, current) => (prev.PDO < current.PDO) ? prev : current);
 
 
-    // sort by value
-    var sortedByPDO = slicedData.sort(function(a, b){
-        return a.PDO - b.PDO;
-    });
+    cardOne.innerHTML = highestPDOTeam.PDO;
+    cardOneSubText.innerHTML = highestPDOTeam.Team;
 
+    cardTwo.innerHTML = lowestPDOTeam.PDO;
+    cardTwoSubText.innerHTML = lowestPDOTeam.Team;
 
-
-    console.log(sortedByPDO);
-
-
-    var sortedByPoints = slicedData.sort(function (a, b) {
-        return a.Points - b.Points;
-    });
-
-    console.log(sortedByPoints);
-
-    let lowestPDO = sortedByPDO[0][PDO_KEY];
-    let highestPDO = sortedByPDO[sortedByPDO.length - 1][PDO_KEY];
-
-    cardOne.innerHTML = highestPDO;
-    let teamHighestPDO;
-    let teamHighestPDORanking;
-    let index1 = findWithAttr(sortedByPoints, 'Team', sortedByPDO[sortedByPDO.length - 1][TEAM_KEY]);
-
-
-    cardOneSubText.innerHTML = sortedByPDO[sortedByPDO.length - 1][TEAM_KEY] + "("  + index1 + ")";
-
-    
-
-
-    cardTwo.innerHTML = lowestPDO;
-    let teamLowestPDO;
-    let teamLowestPDORanking;
-    let index2 = findWithAttr(sortedByPoints, 'Team', sortedByPDO[0][TEAM_KEY]);
-
-    cardTwoSubText.innerHTML = sortedByPDO[0][TEAM_KEY] + "("  + index2 + ")";
-
-    
+    cardThree.innerHTML = highestPDOTeam.W;
+    cardThreeSubText.innerHTML = "Wins: " + highestPDOTeam.Team;
+    cardFour.innerHTML = lowestPDOTeam.W;
+    cardFourSubText.innerHTML = "Wins: " + lowestPDOTeam.Team;
 }
 
 function toggleSeason(season_id) {
