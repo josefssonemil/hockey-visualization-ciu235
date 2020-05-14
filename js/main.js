@@ -1,6 +1,8 @@
 import * as corsiChart from "./corsi.js";
 import * as pdoChart from "./pdo.js";
 import * as xgChart from "./xg-hdcf.js";
+import * as overview from "./overview-teams.js";
+
 
 
 var pageable = new Pageable("#container", {
@@ -48,24 +50,13 @@ var pageable = new Pageable("#container", {
 
 
 
-
-
-function createPDOTable(){
-
-}
-
-function createXGtable(){
-
-}
-
-
-
 //import * as diabetesGeneralChart from "./diabetesGeneral.js";
 
 const init = async () => {
   corsiChart.init();
   pdoChart.init();
   xgChart.init();
+  overview.init();
   
 
 };

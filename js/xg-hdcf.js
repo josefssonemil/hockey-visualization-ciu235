@@ -276,12 +276,10 @@ const bindCardText = data => {
     
     }
 
-    console.log(slicedData);
 
 
     const highestXGTeam = slicedData.reduce((prev, current) => (prev.XGPercent > current.XGPercent) ? prev : current);
 
-    console.log(highestXGTeam);
 
     const lowestXGTeam = slicedData.reduce((prev, current) => (prev.XGPercent < current.XGPercent) ? prev : current);
 
