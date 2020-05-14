@@ -243,27 +243,66 @@ const bindCardText = data => {
     var cardTwoSubText = document.getElementById("card-2-xg-subtext");
 
     var cardThree = document.getElementById("card-3-xg");
+    var cardThreeSubText = document.getElementById("card-3-xg-subtext");
+
     var cardFour = document.getElementById("card-4-xg");
+    var cardFourSubText = document.getElementById("card-4-xg-subtext");
 
 
+    let slicedData = [];
 
+    for (var i = 0; i < currentData.length; i++){
+
+        var team = currentData[i][TEAM_KEY];
+        var xgf = currentData[i][XGF_KEY];
+        var xga = currentData[i][XGF_KEY];
+        var xgp = currentData[i][XG_PERCENT_KEY];
+        var hdcf = currentData[i][HDCF_PERCENT_KEY];
+        var points = currentData[i][PPG_KEY];
+        var toi = currentData[i][TOI_KEY];
+        var w = currentData[i]["W"];
+        var elem = {
+            Team: team,
+            XGF: xgf,
+            XGA: xga,
+            XGPercent: xgp,
+            HDCFPercent: hdcf,
+            Points: points,
+            TOI: toi,
+            W: w
+        }
+        
+        slicedData.push(elem);
     
+    }
 
-    const highestXGTeam = data.reduce((prev, current) => (prev.XG_PERCENT_KEY > current.XG_PERCENT_KEY) ? prev : current);
+    console.log(slicedData);
+
+
+    const highestXGTeam = slicedData.reduce((prev, current) => (prev.XGPercent > current.XGPercent) ? prev : current);
 
     console.log(highestXGTeam);
-    console.log(highestXGTeam.XG_PERCENT_KEY);
 
-    const lowestXGTeam = data.reduce((prev, current) => (prev.XG_PERCENT_KEY > current.XG_PERCENT_KEY) ? prev : current);
+    const lowestXGTeam = slicedData.reduce((prev, current) => (prev.XGPercent < current.XGPercent) ? prev : current);
 
-    const highestHDCFTeam = data.reduce((prev, current) => (prev.HDCF_PERCENT_KEY > current.HDCF_PERCENT_KEY) ? prev : current);
-    const lowestHDCFTeam = data.reduce((prev, current) => (prev.HDCF_PERCENT_KEY > current.HDCF_PERCENT_KEY) ? prev : current);
-
-    
-
-    cardOne.innerHTML = highestXGTeam.TEAM_KEY;
+    const highestHDCFTeam = slicedData.reduce((prev, current) => (prev.HDCFPercent > current.HDCFPercent) ? prev : current);
+    const lowestHDCFTeam = slicedData.reduce((prev, current) => (prev.HDCFPercent < current.HDCFPercent) ? prev : current);
 
     
+
+    cardOne.innerHTML = highestHDCFTeam.W;
+    cardOneSubText.innerHTML = highestHDCFTeam.Team;
+
+    cardTwo.innerHTML = lowestHDCFTeam.W;
+    cardTwoSubText.innerHTML = lowestHDCFTeam.Team;
+
+
+    cardThree.innerHTML = highestXGTeam.W;
+    cardThreeSubText.innerHTML = highestXGTeam.Team;
+
+    cardFour.innerHTML = lowestXGTeam.W;
+    cardFourSubText.innerHTML = lowestXGTeam.Team;
+
 }
 
 function toggleSeason(season_id) {

@@ -251,7 +251,6 @@ const bindCardText = data => {
     var cardFour = document.getElementById("card-4-pdo");
     var cardFourSubText = document.getElementById("card-4-pdo-subtext");
 
-    console.log(data);
 
 
     const highestPDOTeam = data.reduce((prev, current) => (prev.PDO > current.PDO) ? prev : current);
