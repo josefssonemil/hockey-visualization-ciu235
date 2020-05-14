@@ -21,7 +21,7 @@
 
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
 
-  <link href="https://fonts.googleapis.com/css?family=Manrope|Noto+Sans&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
 
 </head>
 
@@ -58,7 +58,7 @@
        <div class="row">
 
         <div class="column center">
-          <img src="img/advanced-good.svg" width=100% >
+          <img src="img/advanced-good.svg" width=100%% >
 
         </div>
 
@@ -103,7 +103,10 @@
 
             </div>
             <div class="col-sm-8">
-              <canvas id="corsiChart" width="50%;"> </canvas>
+              <div class="chart-container">
+                <canvas id="corsiChart" width="50%;"> </canvas>
+
+              </div>
               <h5 class="center">Show season</h5>
               <div class="btn-group btn-group-toggle center" data-toggle="buttons" id="seasonToggle">
                 <label class="btn btn-secondary active">
@@ -276,7 +279,10 @@
 
             </div>
             <div class="col-sm-8">
+              <div class="chart-container">
+
               <canvas id="PDOChart" width="50%;"> </canvas>
+              </div>
               <h5 class="center">Show season</h5>
               <div class="btn-group btn-group-toggle center" data-toggle="buttons" id="seasonTogglePDO">
                 <label class="btn btn-secondary active">
@@ -449,7 +455,10 @@
 
             </div>
             <div class="col-sm-8">
+              <div class="chart-container">
+
               <canvas id="xgChart" width="50%;"> </canvas>
+              </div>
               <h5 class="center">Show season</h5>
               <div class="btn-group btn-group-toggle center" data-toggle="buttons" id="seasonToggleXG">
                 <label class="btn btn-secondary active">
