@@ -86,12 +86,18 @@ const drawCorsiChart = originalData => {
         scales: {
             yAxes: [{
                     display: true,
-                    labelString: "testtest",
-                    fontColor: chartColors.white,
+                  
+                    scaleLabel: {
+                        display: true,
+                        fontSize: 15,
+                        fontColor: 'white',
+                        labelString: 'Corsi Against per 60 minutes played'
+                      },
 
                     ticks: {
                         fontColor: chartColors.white,
                         reverse: true
+                  
                     }
 
                 },
@@ -101,8 +107,12 @@ const drawCorsiChart = originalData => {
 
             xAxes: [{
                 display: true,
-                labelString: "CF60",
-                fontColor: chartColors.white,
+                scaleLabel: {
+                    display: true,
+                    fontSize: 15,
+                    fontColor: 'white',
+                    labelString: 'Corsi For per 60 minutes played'
+                  },
                 ticks: {
                     fontColor: chartColors.white,
                 },

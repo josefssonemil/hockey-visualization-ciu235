@@ -65,15 +65,19 @@ const drawXGChart = originalData => {
         title: {
             display: true,
             text:
-              "Hej",
+              "Expected goals for % and High danger scoring chances for % for all NHL teams. Bubble size represents wins.",
               fontColor: "white"
 
           },
         scales:{
             yAxes: [{
                 display: true,
-                labelString: "CA60",
-                fontColor: "white",
+                scaleLabel: {
+                    display: true,
+                    fontSize: 15,
+                    fontColor: 'white',
+                    labelString: 'HDCF %'
+                  },
 
                 ticks: {
                   fontColor: 'white',
@@ -90,8 +94,12 @@ const drawXGChart = originalData => {
             xAxes: [
                 {
                     display: true,
-                    labelString: "CF60",
-                    fontColor: "white",
+                    scaleLabel: {
+                        display: true,
+                        fontSize: 15,
+                        fontColor: 'white',
+                        labelString: 'xG% '
+                      },
                     ticks: {
                       fontColor: 'white'
                   },
@@ -207,7 +215,7 @@ const organizeData = () => {
 
     const chartData = {
         datasets: [{
-            label: 'Expected goals (for and against) for NHL teams)',
+            label: 'Team',
             data: bubbleData,
             backgroundColor: chartColors.green,
             borderColor: 'black',

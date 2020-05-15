@@ -61,18 +61,25 @@ const drawPDOChart = originalData => {
         title: {
             display: true,
             text:
-              "Hej",
+              "Shot percentage and Save percentage for all NHL teams. PDO is calculated by adding both numbers. Bigger bubble equals more wins.",
               fontColor: "white"
 
           },
         scales:{
             yAxes: [{
                 display: true,
-                labelString: "CA60",
-                fontColor: "white",
-
+                scaleLabel: {
+                    display: true,
+                    fontSize: 15,
+                    fontColor: 'white',
+                    labelString: 'Save Percentage (% of shots saved)'
+                  },
+                
                 ticks: {
                   fontColor: 'white',
+                  callback: function(value, index, values) {
+                    return value + '%';
+                }
               },
               pointLabels: {
                 fontColor: 'white' // labels around the edge like 'Running'
@@ -86,10 +93,17 @@ const drawPDOChart = originalData => {
             xAxes: [
                 {
                     display: true,
-                    labelString: "CF60",
-                    fontColor: "white",
+                    scaleLabel: {
+                        display: true,
+                        fontSize: 15,
+                        fontColor: 'white',
+                        labelString: 'Shot Percentage (% of shots scored)'
+                      },
                     ticks: {
-                      fontColor: 'white'
+                      fontColor: 'white',
+                      callback: function(value, index, values) {
+                        return value + '%';
+                    }
                   },
                 }
             ],
