@@ -52,7 +52,7 @@ const drawPDOChart = originalData => {
                 label: function(tooltipItem, data) {
                     var label = data.datasets[tooltipItem.datasetIndex].label || '';
                     var i = tooltipItem.index;
-                    label = currentData[i][TEAM_KEY] + ": " + "PDO: " + currentData[i][PDO_KEY]; 
+                    label = currentData[i][TEAM_KEY] + ": " + "PDO: " + currentData[i][PDO_KEY] + " | " + "SH%: " + currentData[i][SH_KEY] + " | " + "SV%: " + currentData[i][SV_KEY] + " | " + "Points: " + currentData[i][PPG_KEY]; 
                     return label;
                 }
             }
@@ -65,7 +65,7 @@ const drawPDOChart = originalData => {
         title: {
             display: true,
             text:
-              "Shot percentage and Save percentage for all NHL teams. PDO is calculated by adding both numbers. Bigger bubble equals more wins.",
+              "Shot percentage and Save percentage for all NHL teams. PDO is calculated by adding both numbers. Bigger bubble equals more wins. Score and venue adjusted.",
               fontColor: "white"
 
           },

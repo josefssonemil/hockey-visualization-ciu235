@@ -55,7 +55,7 @@ const drawXGChart = originalData => {
                 label: function(tooltipItem, data) {
                     var label = data.datasets[tooltipItem.datasetIndex].label || '';
                     var i = tooltipItem.index;
-                    label = currentData[i][TEAM_KEY] + " - Points: " + currentData[i][PPG_KEY];
+                    label = currentData[i][TEAM_KEY] + ": "  + "HDCF%: " + currentData[i][HDCF_PERCENT_KEY] + " | " + "xG%: " + currentData[i][XGF_KEY] + " | " + "Points: " + currentData[i][PPG_KEY];
                  
                     return label;
                 }
@@ -69,7 +69,7 @@ const drawXGChart = originalData => {
         title: {
             display: true,
             text:
-              "Expected goals for % and High danger scoring chances for % for all NHL teams. Bubble size represents wins.",
+              "Expected goals for % and High danger scoring chances for % for all NHL teams. Bubble size represents wins. Score and venue adjusted.",
               fontColor: "white"
 
           },

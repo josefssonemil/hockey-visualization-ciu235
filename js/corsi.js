@@ -51,12 +51,6 @@ var ctx = document.getElementById("corsiChart").getContext("2d");
 /* Strips of unnecessary data points and keeping (Team, CF, CA) before passing it to the draw function*/
 const drawCorsiChart = originalData => {
 
-
-
-
-
-
-
     const chartData = organizeData();
 
 
@@ -72,7 +66,7 @@ const drawCorsiChart = originalData => {
                 label: function (tooltipItem, data) {
                     var label = data.datasets[tooltipItem.datasetIndex].label || '';
                     var i = tooltipItem.index;
-                    label = currentData[i][TEAM_KEY] + ": " + "CF60: " + (currentData[i][CF_KEY] / (currentData[i][TOI_KEY] / 60)).toFixed(2) + "\n CA60: " + (currentData[i][CA_KEY] / (currentData[i][TOI_KEY] / 60)).toFixed(2);
+                    label = currentData[i][TEAM_KEY] + ": " + "CF60: " + (currentData[i][CF_KEY]) + " | "+ "CA60: " + (currentData[i][CA_KEY])  + " | " + "CF%: " + (currentData[i][CF_PERCENT_KEY]) + " | " + "Points: " + currentData[i][PPG_KEY]; 
 
                     return label;
                 }
@@ -222,8 +216,8 @@ const organizeData = () => {
     for (var i = 0; i < slicedData.length; i++){
         var elem = 
         {
-            x: slicedData[i][CF_KEY],
-            y: slicedData[i][CA_KEY],
+            x: slicedData[i]["CF"],
+            y: slicedData[i]["CA"],
             r: slicedData[i]["Points"] / 10
         }
 
