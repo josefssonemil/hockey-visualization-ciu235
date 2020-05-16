@@ -38,6 +38,16 @@ const BP_KEY = "BP%";
 
 
 
+function findWithAttr(array, attr, value) {
+    for(var i = 0; i < array.length; i += 1) {
+        if(array[i][attr] === value) {
+            return i;
+        }
+    }
+    return -1;
+}
+
+
 const bindCardText = (teamObj) => {
 
     let teamString = document.getElementById("teamString");
@@ -72,29 +82,47 @@ const bindCardText = (teamObj) => {
     let wins = teamObj.W;
     let losses = teamObj.GP - teamObj.W;
     let points = teamObj.Points;
+    
+    //var sortedbyrank = currentData.sort(function(a,b) { return parseFloat(b.Points) - parseFloat(a.Points) } );
+    //console.log(sortedbyrank);
+    var sortedbypdo = currentData.sort(function(a,b) { return parseFloat(b.Points) - parseFloat(a.Points) } );
+    var pdoRank = findWithAttr(currentData, "PDO", teamObj.PDO) + 1;
+
+    var sortedbywins = currentData.sort(function(a,b) { return parseFloat(b.Points) - parseFloat(a.Points) } );
+    var winRank = findWithAttr(currentData, "W", teamObj.W) + 1;
+
+    
+    var sortedbyCF = currentData.sort(function(a,b) { return parseFloat(b.CF_PERCENT_KEY) - parseFloat(a.CF_PERCENT_KEY) } );
+    var cfRank = findWithAttr(currentData, CF_PERCENT_KEY, teamObj.CF_PERCENT_KEY) + 1;
+
+    console.log(sortedbyCF);
+    console.log(cfRank);
+
+
+
+    var rank = findWithAttr(currentData,"Team", teamObj.Team) + 1;
    
         $("#teamString").html(
             "TEAM " + "<strong>" + team + "</strong>"+
             " WINS " + "<strong>" + wins + "</strong>"+
             " LOSSES " + "<strong>" + losses + "</strong>"+
-            " POINTS " + "<strong>" + points + "</strong>"
-
+            " POINTS " + "<strong>" + points + "</strong>" +
+            " RANK " + "<strong>" + rank + "</strong>"
             );
 
 
-    console.log(teamObj.PP_KEY);
     cardOne.innerHTML = teamObj.PP_KEY;
 
 
-    cardFour.innerHTML = wins / (wins + losses);
+    cardFour.innerHTML = (wins / teamObj["GP"]).toFixed(2) * 100 + "%";
 
-    cardFive.innerHTML = teamObj.XG_PERCENT_KEY;
+    cardFive.innerHTML = teamObj[XG_PERCENT_KEY] + "%";
 
-    cardSix.innerHTML = teamObj.HDCF_PERCENT_KEY;
+    cardSix.innerHTML = teamObj[HDCF_PERCENT_KEY] + "%";
 
-    cardSeven.innerHTML = teamObj.PDO;
+    cardSeven.innerHTML = teamObj[PDO_KEY];
 
-    cardEight.innerHTML = teamObj.CF_PERCENT_KEY;
+    cardEight.innerHTML = teamObj[CF_PERCENT_KEY] + "%";
 
 
 
@@ -135,6 +163,7 @@ export const init = async () => {
     allSeasons = [seasonOneData, seasonTwoData, seasonThreeData, seasonFourData];
 
     currentData = allSeasons[0];
+    currentData.sort(function(a,b) { return parseFloat(b.Points) - parseFloat(a.Points) } );
 
     activeTeam = currentData[0];
     /* Default */
