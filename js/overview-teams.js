@@ -110,15 +110,17 @@ const bindCardText = (teamObj) => {
    
         $("#teamString").html(
             "TEAM " + "<strong>" + team + "</strong>"+
-            " WINS " + "<strong>" + wins + "</strong>"+
-            " LOSSES " + "<strong>" + losses + "</strong>"+
-            " POINTS " + "<strong>" + points + "</strong>" +
-            " RANK " + "<strong>" + rank + "</strong>"
+            " | WINS " + "<strong>" + wins + "</strong>"+
+            " | LOSSES " + "<strong>" + losses + "</strong>"+
+            " | POINTS " + "<strong>" + points + "</strong>" +
+            " | RANK " + "<strong>" + rank + "</strong>"
             );
 
 
-    cardOne.innerHTML = teamObj.PP_KEY;
+    cardOne.innerHTML = teamObj["GF/60"];
+    cardTwo.innerHTML = teamObj["GA/60"];
 
+    cardThree.innerHTML = teamObj["SF/60"];
 
     cardFour.innerHTML = (wins / teamObj["GP"]).toFixed(2) * 100 + "%";
 
