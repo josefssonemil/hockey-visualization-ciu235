@@ -25,6 +25,10 @@ const get1516RegData = async () => d3.csv("/./data/nhl/nhl-15-16-reg.csv");
 const get1516PlayoffsData = async () => d3.csv("/./data/nhl/nhl-15-16-playoffs.csv");
 
 
+const get1415RegData = async () => d3.csv("/./data/nhl/nhl-14-15-reg.csv");
+const get1314RegData = async () => d3.csv("/./data/nhl/nhl-13-14-reg.csv");
+
+
 var chartColors = {
 	red: 'rgb(255, 99, 132)',
 	orange: 'rgb(255, 159, 64)',
@@ -338,8 +342,13 @@ export const init = async () => {
     var seasonTwoData = await get1718RegData();
     var seasonThreeData = await get1617RegData();
     var seasonFourData = await get1516RegData();
+    var seasonFiveData = await get1415RegData();
+    var seasonSixData = await get1314RegData();
 
-    allSeasons = [seasonOneData, seasonTwoData, seasonThreeData, seasonFourData];
+
+
+    allSeasons = [seasonOneData, seasonTwoData, seasonThreeData, seasonFourData, seasonFiveData, seasonSixData];
+
 
     currentData = allSeasons[0];
 

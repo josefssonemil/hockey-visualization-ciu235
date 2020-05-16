@@ -1,8 +1,8 @@
 let chart;
 let currentData;
 
-const CF_KEY = "CF";
-const CA_KEY = "CA";
+const CF_KEY = "CF/60";
+const CA_KEY = "CA/60";
 const CF_PERCENT_KEY = "CF%";
 const TEAM_KEY = "Team";
 const TOI_KEY = "TOI";
@@ -21,6 +21,12 @@ const get1617PlayoffsData = async () => d3.csv("/./data/nhl/nhl-16-17-playoffs.c
 
 const get1516RegData = async () => d3.csv("/./data/nhl/nhl-15-16-reg.csv");
 const get1516PlayoffsData = async () => d3.csv("/./data/nhl/nhl-15-16-playoffs.csv");
+
+
+const get1415RegData = async () => d3.csv("/./data/nhl/nhl-14-15-reg.csv");
+const get1314RegData = async () => d3.csv("/./data/nhl/nhl-13-14-reg.csv");
+
+
 
 var allSeasons = [];
 
@@ -79,7 +85,7 @@ const drawCorsiChart = originalData => {
         },
         title: {
             display: true,
-            text: "Corsi For per 60 (CF60) and Corsi Against per 60 (CA60) for all NHL teams. Bubble size represents wins.",
+            text: "Corsi For per 60 (CF60) and Corsi Against per 60 (CA60) for all NHL teams. Bubble size represents wins. Score and Venue adjusted.",
             fontColor: "white"
 
         },
@@ -216,8 +222,8 @@ const organizeData = () => {
     for (var i = 0; i < slicedData.length; i++){
         var elem = 
         {
-            x: slicedData[i][CF_KEY] * 60 / (currentData[i][TOI_KEY]),
-            y: slicedData[i][CA_KEY] * 60 / (currentData[i][TOI_KEY]),
+            x: slicedData[i][CF_KEY],
+            y: slicedData[i][CA_KEY],
             r: slicedData[i]["Points"] / 10
         }
 
@@ -336,8 +342,12 @@ export const init = async () => {
     var seasonTwoData = await get1718RegData();
     var seasonThreeData = await get1617RegData();
     var seasonFourData = await get1516RegData();
+    var seasonFiveData = await get1415RegData();
+    var seasonSixData = await get1314RegData();
 
-    allSeasons = [seasonOneData, seasonTwoData, seasonThreeData, seasonFourData];
+
+
+    allSeasons = [seasonOneData, seasonTwoData, seasonThreeData, seasonFourData, seasonFiveData, seasonSixData];
 
     currentData = allSeasons[0];
 

@@ -10,6 +10,12 @@ const get1617PlayoffsData = async () => d3.csv("/./data/nhl/nhl-16-17-playoffs.c
 const get1516RegData = async () => d3.csv("/./data/nhl/nhl-15-16-reg.csv");
 const get1516PlayoffsData = async () => d3.csv("/./data/nhl/nhl-15-16-playoffs.csv");
 
+
+
+const get1415RegData = async () => d3.csv("/./data/nhl/nhl-14-15-reg.csv");
+const get1314RegData = async () => d3.csv("/./data/nhl/nhl-13-14-reg.csv");
+
+
 var allSeasons = [];
 
 var currentData;
@@ -154,13 +160,17 @@ $(document).ready(function(){
 </h2>*/
 
 export const init = async () => {
-
     var seasonOneData = await get1819RegData();
     var seasonTwoData = await get1718RegData();
     var seasonThreeData = await get1617RegData();
     var seasonFourData = await get1516RegData();
+    var seasonFiveData = await get1415RegData();
+    var seasonSixData = await get1314RegData();
 
-    allSeasons = [seasonOneData, seasonTwoData, seasonThreeData, seasonFourData];
+
+
+    allSeasons = [seasonOneData, seasonTwoData, seasonThreeData, seasonFourData, seasonFiveData, seasonSixData];
+
 
     currentData = allSeasons[0];
     currentData.sort(function(a,b) { return parseFloat(b.Points) - parseFloat(a.Points) } );
