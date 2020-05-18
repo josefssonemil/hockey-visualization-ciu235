@@ -89,24 +89,39 @@ const bindCardText = (teamObj) => {
     let losses = teamObj.GP - teamObj.W;
     let points = teamObj.Points;
     
-    //var sortedbyrank = currentData.sort(function(a,b) { return parseFloat(b.Points) - parseFloat(a.Points) } );
-    //console.log(sortedbyrank);
-    var sortedbypdo = currentData.sort(function(a,b) { return parseFloat(b.Points) - parseFloat(a.Points) } );
-    var pdoRank = findWithAttr(currentData, "PDO", teamObj.PDO) + 1;
 
-    var sortedbywins = currentData.sort(function(a,b) { return parseFloat(b.Points) - parseFloat(a.Points) } );
-    var winRank = findWithAttr(currentData, "W", teamObj.W) + 1;
+    var sortedbypdo = currentData.sort(function(a,b) { return parseFloat(b["PDO"]) - parseFloat(a["PDO"]) } );
+    var pdoRank = findWithAttr(sortedbypdo, "PDO", teamObj["PDO"]) + 1;
+
+    var sortedbywins = currentData.sort(function(a,b) { return parseFloat(b["W"]) - parseFloat(a["W"]) } );
+    var winRank = findWithAttr(sortedbywins, "W", teamObj["W"]) + 1;
 
     
-    var sortedbyCF = currentData.sort(function(a,b) { return parseFloat(b.CF_PERCENT_KEY) - parseFloat(a.CF_PERCENT_KEY) } );
-    var cfRank = findWithAttr(currentData, CF_PERCENT_KEY, teamObj.CF_PERCENT_KEY) + 1;
+    var sortedbyCF = currentData.sort(function(a,b) { return parseFloat(b[CF_PERCENT_KEY]) - parseFloat(a[CF_PERCENT_KEY]) } );
+    var cfRank = findWithAttr(sortedbyCF, CF_PERCENT_KEY, teamObj[CF_PERCENT_KEY]) + 1;
 
-    console.log(sortedbyCF);
-    console.log(cfRank);
+    var sortedbyGF = currentData.sort(function(a,b) { return parseFloat(b["GF/60"]) - parseFloat(a["GF/60"]) } );
+    var gfRank = findWithAttr(sortedbyGF, "GF/60", teamObj["GF/60"]) + 1;
 
+    var sortedbyGA = currentData.sort(function(a,b) { return parseFloat(b["GA/60"]) - parseFloat(a["GA/60"]) } );
+    var gaRank = findWithAttr(sortedbyGA, "GA/60", teamObj["GA/60"]) + 1;
 
+    var sortedbySF = currentData.sort(function(a,b) { return parseFloat(b["SF/60"]) - parseFloat(a["SF/60"]) } );
+    var sfRank = findWithAttr(sortedbySF, "SF/60", teamObj["SF/60"]) + 1;
 
-    var rank = findWithAttr(currentData,"Team", teamObj.Team) + 1;
+    var sortedbySF = currentData.sort(function(a,b) { return parseFloat(b["SF/60"]) - parseFloat(a["SF/60"]) } );
+    var sfRank = findWithAttr(sortedbySF, "SF/60", teamObj["SF/60"]) + 1;
+
+    var sortedbyXG = currentData.sort(function(a,b) { return parseFloat(b["XG%"]) - parseFloat(a["XG%"]) } );
+    var xgRank = findWithAttr(sortedbyXG, "XG%", teamObj["XG%"]) + 1;
+
+    var sortedbyHDCF = currentData.sort(function(a,b) { return parseFloat(b["HDCF%"]) - parseFloat(a["HDCF%"]) } );
+    var hdcfRank = findWithAttr(sortedbyHDCF, "HDCF%", teamObj["HDCF%"]) + 1;
+   
+   
+   
+    var sortedbyrank = currentData.sort(function(a,b) { return parseFloat(b["Points"]) - parseFloat(a["Points"]) } );
+    var rank = findWithAttr(sortedbyrank,"Team", teamObj.Team) + 1;
    
         $("#teamString").html(
             "TEAM " + "<strong>" + team + "</strong>"+
@@ -118,27 +133,45 @@ const bindCardText = (teamObj) => {
 
 
     cardOne.innerHTML = teamObj["GF/60"];
+    cardOneSubText.innerHTML = "Stat rank | " + gfRank ;
+
     cardTwo.innerHTML = teamObj["GA/60"];
+    cardTwoSubText.innerHTML = "Stat rank | " + (30 - gaRank)  ;
 
     cardThree.innerHTML = teamObj["SF/60"];
+    cardThreeSubText.innerHTML = "Stat rank | " + sfRank ;
 
-    cardFour.innerHTML = (wins / teamObj["GP"]).toFixed(2) * 100 + "%";
+    cardFour.innerHTML = ((wins / teamObj["GP"]) * 100).toFixed(2) + "%";
 
     cardFive.innerHTML = teamObj[XG_PERCENT_KEY] + "%";
+    cardFiveSubText.innerHTML = "Stat rank | " + xgRank;
 
     cardSix.innerHTML = teamObj[HDCF_PERCENT_KEY] + "%";
+    cardSixSubText.innerHTML = "Stat rank | " + hdcfRank;
 
     cardSeven.innerHTML = teamObj[PDO_KEY];
+    cardSevenSubText.innerHTML = "Stat rank | " + pdoRank;
 
     cardEight.innerHTML = teamObj[CF_PERCENT_KEY] + "%";
-
-
+    cardEightSubText.innerHTML = "Stat rank | " + cfRank;
 
  }
 
 
  const toggleSeason = (id) => {
      currentData = allSeasons[id];
+
+    let teamName = activeTeam.Team;
+    let index = findWithAttr(currentData,"Team", teamName);
+   
+    console.log(index);
+
+    activeTeam = currentData[index];
+
+   console.log(activeTeam);
+
+
+   bindCardText(activeTeam);
  }
  
 $(document).ready(function(){
@@ -151,15 +184,34 @@ $(document).ready(function(){
 
 
 
-
 });
 
-/*<h2 class="display" id="teamString">TEAM <strong>NASHVILLE PREDATORS</strong>   <i class="fas fa-angle-double-right"></i> RANK <strong>#1</strong> 
-<i class="fas fa-angle-double-right"></i> WINS <strong>256</strong> 
-<i class="fas fa-angle-double-right"></i> LOSSES <strong>256</strong> 
-<i class="fas fa-angle-double-right"></i> POINTS <strong>+256</strong> 
+const addToDom = () => {
+    var listElements = "";
 
-</h2>*/
+    for (var i = 0; i < currentData.length; i++){
+        listElements += '<button class="dropdown-item" type="button" value=' + currentData[i]["Team"].replace(/\s/g, '') + '>' + currentData[i]["Team"] + '</button>';
+    }
+
+
+    $('.dropdown #dropdownMenu').append(listElements);
+
+
+    $('.dropdown #dropdownMenu button').click( function () {
+        let team = $(this).val();
+        team = team.replace(/([A-Z])/g, ' $1').trim();
+        switchTeam(team);
+    });
+}
+
+const switchTeam = (newTeam) => {
+    let index = findWithAttr(currentData,"Team", newTeam);
+    activeTeam = currentData[index];
+    bindCardText(activeTeam);
+
+}
+
+
 
 export const init = async () => {
     var seasonOneData = await get1819RegData();
@@ -180,5 +232,8 @@ export const init = async () => {
     activeTeam = currentData[0];
     /* Default */
     bindCardText(activeTeam);
+   
+    //currentData.sort(function(a,b) { return parseFloat(b["Team"]) - parseFloat(a["Team"]) } );
+    addToDom();
 
 };
