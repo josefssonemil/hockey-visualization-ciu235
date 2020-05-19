@@ -82,7 +82,6 @@ const bindCardText = (teamObj) => {
     let cardEight = document.getElementById("card-8-cf");
     let cardEightSubText = document.getElementById("card-8-cf-subtext");
 
-    console.log(teamObj);
 
     let team = teamObj.Team;
     let wins = teamObj.W;
@@ -113,7 +112,7 @@ const bindCardText = (teamObj) => {
     var sfRank = findWithAttr(sortedbySF, "SF/60", teamObj["SF/60"]) + 1;
 
     var sortedbyXG = currentData.sort(function(a,b) { return parseFloat(b["XG%"]) - parseFloat(a["XG%"]) } );
-    var xgRank = findWithAttr(sortedbyXG, "XG%", teamObj["XG%"]) + 1;
+    var xgRank = findWithAttr(sortedbyXG, "xGF%", teamObj["xGF%"]) + 1;
 
     var sortedbyHDCF = currentData.sort(function(a,b) { return parseFloat(b["HDCF%"]) - parseFloat(a["HDCF%"]) } );
     var hdcfRank = findWithAttr(sortedbyHDCF, "HDCF%", teamObj["HDCF%"]) + 1;
@@ -155,6 +154,7 @@ const bindCardText = (teamObj) => {
     cardEight.innerHTML = teamObj[CF_PERCENT_KEY] + "%";
     cardEightSubText.innerHTML = "Stat rank | " + cfRank;
 
+    
  }
 
 
@@ -164,11 +164,9 @@ const bindCardText = (teamObj) => {
     let teamName = activeTeam.Team;
     let index = findWithAttr(currentData,"Team", teamName);
    
-    console.log(index);
 
     activeTeam = currentData[index];
 
-   console.log(activeTeam);
 
 
    bindCardText(activeTeam);

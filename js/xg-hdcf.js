@@ -55,7 +55,7 @@ const drawXGChart = originalData => {
                 label: function(tooltipItem, data) {
                     var label = data.datasets[tooltipItem.datasetIndex].label || '';
                     var i = tooltipItem.index;
-                    label = currentData[i][TEAM_KEY] + ": "  + "HDCF%: " + currentData[i][HDCF_PERCENT_KEY] + " | " + "xG%: " + currentData[i][XGF_KEY] + " | " + "Points: " + currentData[i][PPG_KEY];
+                    label = currentData[i][TEAM_KEY] + ": "  + "HDCF%: " + currentData[i][HDCF_PERCENT_KEY] + " | " + "xGF%: " + currentData[i]["xGF%"] + " | " + "Points: " + currentData[i][PPG_KEY];
                  
                     return label;
                 }
@@ -102,7 +102,7 @@ const drawXGChart = originalData => {
                         display: true,
                         fontSize: 15,
                         fontColor: 'white',
-                        labelString: 'xG% '
+                        labelString: 'xGF% '
                       },
                     ticks: {
                       fontColor: 'white'
@@ -329,7 +329,6 @@ $(document).ready(function(){
     $('#seasonToggleXG .btn').click( function () {
         let season_id = $(this).find('input').val();
         toggleSeason(season_id);
-        console.log("toggle xg")
     });
 })
 

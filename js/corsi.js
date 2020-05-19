@@ -230,12 +230,12 @@ const organizeData = () => {
         datasets: [{
             label: 'Team',
             data: bubbleData,
-            backgroundColor: chartColors.orange,
+            backgroundColor: chartColors.blue,
             borderColor: 'black',
             pointRadius: 10,
             pointHitRadius: 10,
             pointHoverRadius: 15,
-            pointHoverBackgroundColor: chartColors.orange
+            pointHoverBackgroundColor: chartColors.blue
 
         }]
     };
